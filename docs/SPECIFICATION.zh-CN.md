@@ -333,5 +333,7 @@ Accepted/Merged Source
 - network proxy / MITM；
 - automatic deletion of conversation context。
 
-这些能力只有在真实摩擦证明必要后，才进入后续版本。
+这些能力不属于 v1.1 acceptance baseline。
+
+其中 `automatic context injection` 已因真实 dogfood 中的 Agent 工具调用积极性 / 指令遵循差异，被记录为 v3 的明确研究方向：目标是在 Agent 主动调用 Skill 或主动读取 Project Spine **之前**，由 host/runtime/adapter 提供当前项目的最小 Project Context Packet。它仍需独立设计、实现和验证，不能因为写入 roadmap 就倒推为 v1.1 已有能力。
 

@@ -13,11 +13,16 @@ Repository: <https://github.com/GhabiX/SpineCodex>
 - Closed Node 生成 compact memory；
 - 已完成阶段退出未来默认活跃上下文；
 - “什么时候可以只留下 memory”比“按日期记日志”更重要。
+- runtime 可以透明管理当前工作所需 context，而不是要求用户每次手工恢复完整历史。
 
 Project Continuity 的 `Work Node` / `Closure Memory` 与这类思想高度相关，但目标不同：
 
 - SpineCodex 更靠近 Codex runtime/context management；
 - Project Continuity v1.1 更靠近跨天、跨会话、跨 Agent 的长期可读 project state。
+
+未来 v3 会进一步吸收这类 runtime 思路，但目标是跨平台的 **Project Context Compiler / automatic context feed**：在 Codex 或其它 Agent 开始判断“是否要调用工具”之前，先把当前 Project Spine / Active Work Node / Handoff / Protected Invariants 的最小投影交给它。这样正确接手不再依赖 Agent 主动调用 Project Workbench。
+
+这和 `implicit Skill invocation` 不同：后者仍由模型决定是否触发 Skill；前者是 host/runtime/adapter 侧的确定性 context materialization。
 
 我们没有照搬：
 

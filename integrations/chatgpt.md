@@ -32,3 +32,9 @@ policy:
 
 fresh ChatGPT conversation 不应因为看到旧 Session Key 就继承旧会话 write authority。接手共享 scope 时使用新 key + explicit handoff，除非平台能提供真实 claimant-continuity evidence。
 
+## Future: Web automatic context feed
+
+网页版同样是 Project Continuity runtime-injection 的目标场景：理想状态不是让用户每次新对话都提醒“先读 Project Spine”，也不是依赖模型是否主动触发 Skill，而是在平台能力允许时由 native project/system-context hook、browser/local companion 或其它可审计 adapter，在模型开始处理任务前提供当前项目的最小 Context Packet。
+
+当前仓库**没有声称这个 Web 自动注入已经实现**。具体实现必须以目标平台真实暴露的能力为准；如果不存在可靠 pre-turn injection surface，就保持现有 explicit workflow，而不是伪造“无感自动接手”。
+

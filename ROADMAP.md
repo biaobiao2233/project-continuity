@@ -53,14 +53,45 @@ Project Continuity 的路线图按**真实使用摩擦**推进，不以“版本
 
 ## v3 — Runtime context injection / hooks
 
+这是一个明确的长期方向：**不要把 Project Continuity 的正确使用建立在 Agent 是否愿意主动调用 Skill、主动打开 Project Spine、或是否完全遵循提示词之上。**
+
+当前 `Project Workbench` explicit-only 是 v1.x 的安全工作流入口；未来 runtime injection 的目标与“implicit Skill invocation”不同：
+
+```text
+session start / project switch / resume
+              ↓
+     Project Context Compiler
+              ↓
+Project Spine / Handoff / Active Node
+              ↓
+     minimal Context Packet
+              ↓
+ Codex / other Agent / Web client
+```
+
+`implicit Skill invocation` 仍然依赖模型自己决定“要不要调用”；这里希望把最小、当前、可验证的项目连续上下文在**模型作出这个决定之前**由 host/runtime/adapter materialize 进去。
+
 实验方向：
 
-- 按 Active Work Node 选择 relevant context；
-- Closed Node 只投影 Closure Memory；
-- source pointers 按需展开；
-- cross-project related-memory 提示，但默认不把其它项目的 memory 自动注入当前 authority context；
-- 所有自动注入可见、可关闭、可审计；
-- injection 失败时安全回退，不静默删掉用户/系统关键上下文。
+- 在 session start、project switch、resume、handoff/closure 后按需刷新当前 Project Context Packet；
+- 自动投影 current project identity、Current Goal、Active/Bound Work Node、Next Action、Protected Invariants、Accepted State / candidate boundary、必要的 Session Pin / ownership 状态；
+- 按 Active Work Node 选择 relevant context，Closed Node 默认只投影 Closure Memory；
+- source pointers 保持为 pointer，只有需要精确证据时再展开；
+- 默认只自动注入**当前项目的 authority context**；EverOS / cross-project related memory 仍作为 derived clue，不静默升级为当前项目事实；
+- Context Packet 带 revision/hash/source pointers，使接收端能识别 stale context；
+- 所有自动注入可见、可关闭、可审计，并能显示“本轮实际注入了什么”；
+- injection 失败时安全回退到原始上下文，不伪造 continuity state，也不静默删掉用户/系统关键上下文；
+- ownership / claimant 不确定时，注入 `OWNERSHIP_UNCERTAIN` / read-only 边界，而不是因为自动化而自动授予写权。
+
+### Target adapters
+
+- **Codex CLI / Desktop**：优先研究 launcher / hook / runtime adapter，在新任务进入模型前 materialize Project Context Packet；
+- **Claude Code / OpenCode / Antigravity / generic coding agents**：通过各自可用的 hook、plugin、MCP host 或 launcher 接入同一 compiler contract；
+- **Web AI / ChatGPT Web 等网页版客户端**：目标同样是不要求用户每次提醒“先读账本”。如果平台没有原生 pre-turn context hook，则研究 browser/local companion 或平台允许的 project/system-context adapter；具体实现取决于平台能力，不能把尚不存在的接口写成已完成能力。
+
+### Design driver
+
+真实使用中，Agent 的工具调用积极性和指令遵循并不稳定。Project Continuity 的长期可靠性不能依赖“模型这次刚好想起来读文件”。因此 v3 的验收重点不是更炫的自动化，而是：**一个低主动性 Agent 也能在开始工作前被动获得正确的最小项目上下文。**
 
 ## v4 — Optional local context proxy
 

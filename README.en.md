@@ -77,7 +77,7 @@ See [docs/PRIOR_ART.md](docs/PRIOR_ART.md) for the exact boundaries.
 
 - **v1.x:** improve Markdown ergonomics, examples, and drift validation.
 - **v2:** optional CLI/MCP helpers only if manual drift becomes a repeated problem.
-- **v3:** experimental runtime context injection / hooks.
+- **v3:** experimental runtime context injection / hooks, with a long-term goal of **automatic project context feed**: a host/runtime adapter materializes the current Project Spine / Active Work Node / Handoff / invariants before the model decides whether to call a Skill or read files. Codex is the first target, with reusable adapters for other agents and technically supported Web clients.
 - **v4:** optional local context proxy and request-time compression research.
 
 The project deliberately avoids adding a database, daemon, heartbeat, proxy or automatic context rewriting until real usage justifies the additional authority and failure modes.

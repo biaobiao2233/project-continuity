@@ -243,9 +243,14 @@ Project Continuity 不是这些项目的 fork，也没有复制它们的源代�
 
 ### v3 — Runtime Context Injection / Hooks（实验）
 
-- 根据 Active Node 选择相关 context；
-- closed-node memory 的运行时投影；
-- 可关闭、可审计、fail-open-to-original-context 的 injection。
+- 长期目标是不再依赖 Agent 主动调用 Skill / 主动读取 Project Spine；
+- 由 host/runtime/adapter 在模型开始工作前自动 materialize 当前项目的最小 Project Context Packet；
+- 根据 Active Node 选择相关 context，closed-node memory 只投影 Closure Memory；
+- 优先覆盖 Codex，并设计可复用到 Claude Code / OpenCode / Antigravity / generic Agent；网页版 AI 在平台能力允许时通过 native hook 或 browser/local companion 接入；
+- 自动注入只携带当前项目的 authority context；EverOS / 跨项目 memory 默认仍是 derived clue，不自动晋升为当前事实；
+- injection 可见、可关闭、可审计，并 fail-open-to-original-context。
+
+这里的 **automatic context feed 不等于 implicit Skill invocation**：implicit Skill 仍要靠模型主动决定调用，而 v3 目标是在模型做这个决定之前就把最小正确项目上下文送进去。这个方向受到 SpineCodex runtime context management 的启发，但 Project Continuity 不要求 fork Codex，也不把 SpineJIT 作为前提。
 
 ### v4 — Optional Local Context Proxy（研究）
 

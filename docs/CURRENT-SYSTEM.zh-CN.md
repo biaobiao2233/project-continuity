@@ -112,4 +112,8 @@ EverOS 则可以作为共享的 derived historical layer，让 Project B 的 Age
 - 不依赖后台 daemon 抢占项目 ownership；
 - Control Center 目前还不是 Project Continuity 的写入数据库。
 
+另外，**当前 v1.x 仍然主要依赖 Agent / 用户显式进入 Project Workbench，再读取 Project Spine。** 这不是最终形态。已明确列入 v3 的长期目标是 automatic project context feed：由 host/runtime/adapter 在 Agent 开始工作之前自动 materialize 当前项目的最小连续上下文，从而降低对 Agent 工具调用积极性和提示词遵循质量的依赖。Codex 是优先目标，其他 coding Agent 和技术上可接入的 Web AI 客户端随后复用同一 Context Packet contract。
+
+这里必须区分：`implicit Skill invocation` 仍由模型决定是否触发；automatic context feed 是模型决策之前的 host/runtime-side context materialization。
+
 这些边界是有意保留的安全设计，不是遗漏。
