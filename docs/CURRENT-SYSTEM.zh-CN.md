@@ -101,7 +101,7 @@ EverOS 则可以作为共享的 derived historical layer，让 Project B 的 Age
 - Project Workbench 的 Receiver 流程明确把 EverOS 放在 Project Spine / Closure 之后；
 - 有 EverOS memory tools 时，可以用 `memory_search` / `memory_get` 等做历史恢复；
 - 检索结果只作为 derived clue，必须按需要回 source / repo / live state；
-- EverOS Control Center 可以作为 EverOS 的搜索、原件、同步和 pipeline 可观测界面；
+- EverOS Control Center 当前真正相对成熟的是**同步流程**；搜索、记忆原件和 pipeline / run history 虽然已有界面和数据链路，但仍属早期实验，其中记忆原件可读性明显不足，不能当成成熟阅读器；
 - 每个项目仍由自己的 Project Continuity 文件保存当前 state / handoff / acceptance。
 
 目前**没有**自动做的部分：

@@ -167,13 +167,15 @@ EverOS 负责让这些项目背后的历史经验彼此可发现。
 
 ## 桌面端
 
-配套的 EverOS Control Center 负责：
+配套的 EverOS Control Center 当前提供这些界面，但完成度并不相同：
 
-- EverOS health；
-- memory search；
-- Markdown memory 浏览；
-- sync manifest / runs / progress observability；
-- 显式同步操作。
+- **显式同步操作 / sync manifest / progress：目前主要可用、完成度最高的部分；**
+- EverOS health：基础状态查看；
+- memory search：仍属实验性界面；
+- Markdown memory / “记忆原件”：目前非常粗糙，排版、导航、信息层级和长文本可读性都不足，暂时更接近开发/诊断视图；
+- pipeline / runs：主要用于可观测与诊断，还不是成熟的普通用户工作台。
+
+因此当前不要把 Control Center 描述成“所有 EverOS 记忆能力都已经日常可用”的完整 GUI。**现阶段真正正常、优先保证体验的是同步页，其它页面更多是在验证数据链路和未来交互方向。**
 
 它不应该直接成为 Project Continuity 的 accepted-state database。
 
