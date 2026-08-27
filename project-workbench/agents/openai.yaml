@@ -1,0 +1,6 @@
+interface:
+  display_name: "Project Workbench"
+  short_description: "Project continuity, review, handoff, and multi-agent workflows"
+policy:
+  allow_implicit_invocation: true
+
