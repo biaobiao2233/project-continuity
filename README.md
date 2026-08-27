@@ -2,7 +2,7 @@
 
 **让一个没参与旧聊天的 AI Agent，不重放完整历史，也能安全、准确地接手长期项目。**
 
-[English](README.en.md) · [规范](docs/SPECIFICATION.zh-CN.md) · [模板](docs/TEMPLATES.md) · [多会话协调](docs/COORDINATION.zh-CN.md) · [EverOS 联动](docs/EVEROS-INTEGRATION.md) · [路线图](ROADMAP.md)
+[English](README.en.md) · [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md) · [规范](docs/SPECIFICATION.zh-CN.md) · [模板](docs/TEMPLATES.md) · [多会话协调](docs/COORDINATION.zh-CN.md) · [EverOS / 多项目联动](docs/EVEROS-INTEGRATION.md) · [路线图](ROADMAP.md)
 
 Project Continuity 是一套面向 ChatGPT、Codex、Claude Code、Antigravity、OpenCode 等 Agent 的**跨会话 / 跨 Agent 项目连续记忆协议**。
 
@@ -10,7 +10,9 @@ Project Continuity 是一套面向 ChatGPT、Codex、Claude Code、Antigravity�
 
 > **现在要记什么？什么能信？下一个 Agent 怎么继续？**
 
-当前公开基线：**v1.1 Markdown Protocol + Project Workbench**。
+当前公开基线：**Project Continuity v1.1 Protocol + Project Workbench public parity release v1.1.1**。
+
+> 这不是一份只用于介绍想法的概念稿。仓库内 `project-workbench/` 现在按当前实际 dogfood / accepted user-level package 做 public parity；真实项目的私有 Spine、worklogs、聊天和凭据不会被打包公开。详见 [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md)。
 
 ## 为什么需要它
 
@@ -134,11 +136,12 @@ Relevant Closure Memory 和 Next Action。
 - [Claude Code](integrations/claude-code.md)
 - [Antigravity / generic agents](integrations/generic-agent.md)
 
-推荐策略：
+当前公开默认策略：
 
-- ChatGPT：可以允许自动匹配项目工作；
-- Codex：`$project-workbench` explicit-only；
-- Claude Code：`/project-workbench` explicit-only；
+- Project Workbench package：**explicit-only**，`allow_implicit_invocation: false`；
+- Codex：`$project-workbench` 显式调用；
+- Claude Code：`/project-workbench` 显式调用；
+- ChatGPT 或其它支持自动匹配的平台可以自行启用 implicit adapter，但这属于平台策略变化，不是 canonical core 默认值；
 - 普通聊天 / 一次性代码修改不应被治理流程劫持。
 
 ## 与 EverOS 联动
@@ -167,11 +170,29 @@ Source conversations / raw artifacts
 - EverOS：回答“过去可能发生过什么、相关来源在哪里”；
 - 原始会话 / repo / live state：在需要精确证据时回源。
 
+更重要的是，EverOS 让**多个彼此独立的项目共享历史经验，而不是共享当前 authority**：
+
+```text
+Project A source history ─┐
+Project B source history ─┼──► EverOS shared historical index
+Project C source history ─┘              ▲
+                                         │ semantic search
+Current Agent ─► Project B Spine ────────┘
+                     │
+                     ▼
+             source / repo verify
+                     │
+                     ▼
+           only update Project B state
+```
+
+因此一个项目里踩过的坑、做过的实验、设计取舍可以被另一个项目找到并复用；但 Project A 的 `PASS`、production state、authorization 或 owner **不会自动传播**给 Project B。
+
 现有 EverOS 开源 fork：<https://github.com/biaobiao2233/EverOS>
 
 桌面控制台：<https://github.com/biaobiao2233/everos-control-center>
 
-详细边界见 [docs/EVEROS-INTEGRATION.md](docs/EVEROS-INTEGRATION.md)。
+完整联动效果、跨项目例子和 authority 边界见 [docs/EVEROS-INTEGRATION.md](docs/EVEROS-INTEGRATION.md)。
 
 ## 吸收了哪些项目 / 方法的优点
 

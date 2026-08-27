@@ -4,16 +4,20 @@
 
 ChatGPT Skill 可以使用仓库里的 `project-workbench/` 作为 canonical core。
 
-推荐 ChatGPT adapter 允许 implicit discovery，但必须靠 description 做 anti-ceremony 边界：普通聊天、无关研究、一次性简单编辑不应触发 Project Continuity。
+当前公开 package 采用 **explicit-only** 作为安全默认值。这样普通聊天、无关研究、一次性简单编辑不会因为 description 误匹配而进入 Project Continuity 工作流。
+
+如果某个 ChatGPT 环境经过真实 anti-ceremony dogfood 后希望自动匹配，可以把 implicit discovery 当成**平台 adapter policy**单独开启；不要静默修改 canonical core。
 
 示例 `agents/openai.yaml`：
 
 ```yaml
 interface:
   display_name: "Project Workbench"
-  short_description: "Project continuity, review, handoff, and multi-agent workflows"
+  short_description: "Project continuity, MCP workflows, review, and handoff"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
 policy:
-  allow_implicit_invocation: true
+  allow_implicit_invocation: false
 ```
 
 平台 metadata 不属于 canonical core；其它 Agent 不需要复制 `agents/openai.yaml`。

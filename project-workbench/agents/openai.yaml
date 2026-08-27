@@ -1,6 +1,7 @@
 interface:
   display_name: "Project Workbench"
-  short_description: "Project continuity, review, handoff, and multi-agent workflows"
+  short_description: "Project continuity, MCP workflows, review, and handoff"
+  icon_small: "./assets/icon.svg"
+  icon_large: "./assets/icon.svg"
 policy:
-  allow_implicit_invocation: true
-
+  allow_implicit_invocation: false

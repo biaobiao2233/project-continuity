@@ -27,6 +27,8 @@ Project Continuity 的路线图按**真实使用摩擦**推进，不以“版本
 - public handoff scorecards；
 - lint / schema / cross-file drift detection；
 - adapter/core drift checks；
+- public Skill parity：公开 `project-workbench/` 与当前 accepted package 的 drift 检查；
+- 多项目 × EverOS 的真实 dogfood、source-scope 过滤和公开示例；
 - 中英文文档完善。
 
 不做：为了自动化而自动化，不新增第二套 accepted-state database。
@@ -44,6 +46,8 @@ Project Continuity 的路线图按**真实使用摩擦**推进，不以“版本
 - `continuity close`
 - stale Handoff / duplicate state / missing review gate diagnostics
 - Project Workbench adapter packaging
+- 可选 project index / locator：在很多 Project Spine 之间只读导航
+- accepted Closure Memory 的显式、选择性 EverOS export helper（不自动写）
 
 原则：Markdown 仍是人类可读、可审计的 authority surface；helper 不能暗中建立第二套项目真相。
 
@@ -54,6 +58,7 @@ Project Continuity 的路线图按**真实使用摩擦**推进，不以“版本
 - 按 Active Work Node 选择 relevant context；
 - Closed Node 只投影 Closure Memory；
 - source pointers 按需展开；
+- cross-project related-memory 提示，但默认不把其它项目的 memory 自动注入当前 authority context；
 - 所有自动注入可见、可关闭、可审计；
 - injection 失败时安全回退，不静默删掉用户/系统关键上下文。
 
@@ -92,4 +97,15 @@ Optional Runtime Context Compiler — session-time materialization
 ```
 
 任何自动同步都必须保留 provenance：EverOS memory 不能自动晋升为 Accepted Memory；Project Continuity 的 accepted state 也不应该把完整项目流水反向灌入 EverOS。
+
+### EverOS Control Center 联动
+
+后续可以探索：
+
+- 多项目只读 Project Spine / Handoff 切换；
+- EverOS search result → source project / source pointer 回源；
+- Project Continuity current state 与 EverOS historical memory 的并排视图；
+- 选择性 Closure Memory export / backlink，但每次写入都必须显式、可审计。
+
+Control Center 不成为 Accepted State database；任何写入仍受各项目自己的 ownership / review / verification 规则约束。
 

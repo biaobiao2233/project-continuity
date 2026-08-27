@@ -2,7 +2,7 @@
 
 **A cross-agent project memory and handoff protocol for long-running work.**
 
-[中文](README.md) · [Specification](docs/SPECIFICATION.zh-CN.md) · [Templates](docs/TEMPLATES.md) · [EverOS integration](docs/EVEROS-INTEGRATION.md) · [Roadmap](ROADMAP.md)
+[中文](README.md) · [Current system](docs/CURRENT-SYSTEM.zh-CN.md) · [Specification](docs/SPECIFICATION.zh-CN.md) · [Templates](docs/TEMPLATES.md) · [EverOS / multi-project integration](docs/EVEROS-INTEGRATION.md) · [Roadmap](ROADMAP.md)
 
 Project Continuity helps a fresh AI agent safely resume a project without replaying the entire conversation history.
 
@@ -10,7 +10,9 @@ It is not a chat archive or a vector database. It focuses on three questions:
 
 > **What should be remembered now? What should be trusted? How should the next agent continue?**
 
-Current public baseline: **v1.1 Markdown Protocol + Project Workbench**.
+Current public baseline: **Project Continuity v1.1 Protocol + Project Workbench public parity release v1.1.1**.
+
+The checked-in `project-workbench/` is intended to track the accepted user-level package used for real dogfood rather than remain a simplified public-only variant. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration are deliberately excluded.
 
 ## Core model
 
@@ -56,6 +58,8 @@ Project Continuity
 
 EverOS can help locate relevant history, but its compressed memory must not silently replace exact source evidence, current authorization, or live state.
 
+Across multiple projects, this creates **shared historical retrieval without shared authority**. A project can discover a useful experiment or source pointer from another project's history through EverOS, then verify it against its own repo/state before recording a local outcome. PASS, ownership, authorization, and release state never propagate automatically between projects.
+
 Open EverOS fork: <https://github.com/biaobiao2233/EverOS>
 
 ## Prior art
@@ -87,6 +91,8 @@ The project deliberately avoids adding a database, daemon, heartbeat, proxy or a
 5. Use `project-workbench/` for a reusable on-demand workflow.
 
 Platform notes are under `integrations/`.
+
+The public Project Workbench package defaults to **explicit-only** invocation (`allow_implicit_invocation: false`). Platforms may opt into implicit discovery as an adapter policy, but that is not the canonical default.
 
 ## License
 
