@@ -1,6 +1,8 @@
-# EverOS Usage
+# EverOS historical memory routing
 
-Use EverOS only when its memory tools are actually available in the current account/session. Prefer the current direct EverOS connector (for example EverOS-Tunnel) when available. Treat it as read-mostly semantic/historical memory and index across agent sessions. It is useful for discovery; it is not the authoritative current project ledger.
+Use EverOS as read-mostly semantic/historical memory across prior agent sessions. Prefer the direct `EverOS-Tunnel` connector when it is available. Treat the older `everos` connector as fallback, not the default path.
+
+EverOS is useful for discovery and source location; it is not the authoritative current project ledger or live-state monitor.
 
 ## Correct evidence level
 
@@ -10,27 +12,31 @@ EverOS output is derived memory/index evidence. Never use it by itself to prove:
 - exact current user authorization
 - final acceptance/PASS
 - exact wording when a source conversation/file is available
-- current production version or deployment state
+- current production version/deployment state
+- current Session Pin or write ownership
 
-If EverOS conflicts with Project Continuity, current repo/files, or live evidence, return to the higher-authority source.
+If EverOS conflicts with Project Continuity, GitHub canonical records, current repo/files, or live evidence, return to the higher-authority source.
 
 ## Tool workflow
 
-When the corresponding tools exist:
+When the tools exist:
 
 - Use `memory_status` only when health/availability matters.
-- Use `memory_search` for semantic historical questions such as why a decision was made, which prior agent/session handled something, or what earlier experiments found.
-- Use `memory_get` when an exact session ID is known and the bounded episode/profile/case is needed.
-- Use `memory_list_sources` only to inventory configured source partitions when necessary.
-- Use focused queries; prefer project/topic names, exact terms, and the missing decision/fact. Do not sweep unrelated user history.
-- Treat `partial`, timeout, or stale/derived results as incomplete, not as absence of history.
+- Use `memory_search` for semantic historical questions: why a decision was made, which prior session handled something, or what an earlier experiment found.
+- Use focused queries with project/topic names, exact terms, and the missing decision/fact; do not sweep unrelated user history.
+- Use returned session/provenance identifiers to narrow the source.
+- Use `memory_get` when an exact session ID is known and the bounded episode/case is needed.
+- Use `memory_list_sources` only when source inventory is materially relevant.
+- Treat `partial`, timeout, stale, or derived results as incomplete rather than evidence that history does not exist.
+
+Do not perform redundant health/status calls before every search when the connector is already working in the current flow.
 
 ## Write boundary
 
-Do not call a memory write operation such as `memory_remember` merely because useful history was found. Writes require explicit user intent plus whatever server confirmation/approval path is configured. Project Continuity remains the normal place for accepted durable project state.
+Do not call `memory_remember` merely because useful history was found. Memory writes require explicit user intent plus the configured approval path. Project Continuity and the project's canonical tracker remain the normal locations for accepted durable project state.
 
-## Typical fallback sequence
+## Typical recovery sequence
 
-`Project Spine / Active Work Node → relevant Closure/source pointers → EverOS semantic search if history is missing → exact source/session when needed → current repo/live verification`.
+`Project Spine / Active Work Node → canonical Issue/PR/source pointers → relevant Closure → EverOS-Tunnel semantic search if history is missing → exact source/session when needed → current repo/live verification`.
 
 Use EverOS to reduce rediscovery, not to bypass verification.
