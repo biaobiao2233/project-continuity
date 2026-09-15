@@ -101,6 +101,7 @@ EverOS 则可以作为共享的 derived historical layer，让 Project B 的 Age
 - Project Workbench 的 Receiver 流程明确把 EverOS 放在 Project Spine / Closure 之后；
 - 当前 ChatGPT dogfood 优先使用 `EverOS-Tunnel` 的 `memory_search` / `memory_get` 等做历史恢复；
 - 检索结果只作为 derived clue，必须按需要回 source / repo / live state；
+- EverOS Control Center 当前相对成熟的是同步流程；搜索、记忆原件和 pipeline/run history 已有界面与数据链路，但仍属于早期能力，不能替代 source/repo/live verification；
 - 已有目标主机直连 WebCodex 时，服务器工作优先直接走对应 connector，而不是默认绕本机 SSH/旧代理；
 - GitHub-backed 项目默认使用 GitHub 作为 durable Issue/PR ledger，本地 Continuity 只保留协调与 runtime facts；
 - 每个项目仍由自己的 Project Continuity 文件保存当前 state / handoff / acceptance。
