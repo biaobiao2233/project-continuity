@@ -1,50 +1,41 @@
-# Coding Tools MCP / Local-Machine MCP
+# Local-machine / Coding Tools routing
 
-Use the available local-machine/Coding Tools MCP when the task depends on the user's Windows machine, local repos, services, staging/production, host roots, or machine-side files.
+Use a local-machine/Coding Tools connector only when the task depends on resources that actually live on the user's Windows machine: local repos/files, desktop-only services, device state, or local build/runtime processes.
 
-Prefer direct server connectors when the target server already has an authorized WebCodex/Tunnel connector. Use local-machine MCP only for resources that actually live on the user's device.
+Prefer a healthy direct server connector for server targets. Do not use Windows as an unnecessary SSH jump host when the target server already has an authorized direct connector.
+
+## Current local binding
+
+Prefer `WebCodex-PC` when it is online and exposes the needed capability. Treat older device-specific local MCP connectors as fallback rather than the default path. If no local connector is available, state that limitation instead of inferring local state.
 
 ## Discover actual capability first
 
-Use the tool list/runtime metadata that is actually available. Do not invent a tool name, host alias, project path, permission mode, or server feature because a different account/server had it.
+Use the tool inventory/runtime metadata that is actually available. Do not invent a tool name, project path, host alias, permission mode, repo, or server feature because a different session had it.
 
-When relevant, inspect server/runtime metadata such as `server_info`, execution environment, host roots, workspace/project context, permission mode, version, and tool inventory. Do not assume a source version is the live production version.
+Keep these distinct:
 
-Keep separate:
-
-- Accepted production/runtime
-- Source candidate/branch/commit
-- Staging runtime/evidence
-- Active release pointer/artifact
+- accepted production/runtime
+- source candidate/branch/commit
+- staging/runtime evidence
+- active release pointer/artifact
 
 ## Routing
 
-- Windows files, local repositories, desktop-only services → local-machine MCP.
-- SG/HK/US/KR server work when the corresponding WebCodex connector exists → that server connector first.
-- Historical decisions and old conversations → EverOS connector.
-- If a preferred connector is unavailable, state the limitation and use an authorized fallback.
+- Windows files, local repos, desktop-only services → local-machine connector.
+- SG/HK/US/KR server resources → corresponding direct server connector first.
+- Durable GitHub Issues/PRs/commits/CI → GitHub connector when GitHub is canonical.
+- Historical decisions/old agent sessions → `EverOS-Tunnel` when available.
 
-## Read-first workflow
+If the preferred connector is unavailable, identify the transport/tool limitation and use an already-authorized fallback only when appropriate.
 
-Prefer bounded read tools offered by the current MCP, commonly:
+## Read and modify
 
-- `read_file` / `host_read_file`
-- `list_files` / `host_list_dir`
-- `search_text`
-- `git_status`
-- `git_diff`
-- `git_log`
-- `git_show`
-- `server_info`
+Prefer bounded dedicated helpers such as file reads, searches, Git status/diff/log, and runtime metadata before using general commands. Use the connector's documented patch/write mechanism for direct file edits when available. Preserve unrelated/concurrent changes.
 
-Use bounded command tools for tests or validation. Do not interpret a tool limitation as evidence about the code.
-
-## Modification rule
-
-Use the MCP's documented direct patch/write mechanism. Preserve unrelated and concurrent changes. Inspect final status/diff.
+Once scope and authorization are clear, continue through safe inspect → edit → test → repair → retest without asking for confirmation after every routine step.
 
 ## Production boundary
 
-Never infer authorization to stop/restart/replace production, change active-release, alter OAuth/credential state, public endpoints, or promotion state from a general coding request. Require the current Work Node/user authorization to cover the exact action.
+Never infer authorization to stop/restart/replace production, change release pointers, credentials, OAuth state, public endpoints, or permissions from a general coding request. Require the current user authorization/Work Node to cover the exact action.
 
-Never print or persist secrets. When checking environment/configuration, prefer variable names/status over secret values.
+Never print or persist secrets. When inspecting configuration, prefer variable names/status over secret values.
