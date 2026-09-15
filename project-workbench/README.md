@@ -5,9 +5,10 @@ This directory is the reusable workflow layer for Project Continuity and is inte
 It includes:
 
 - current Project Continuity / governance semantics;
+- GitHub-first issue and pull request governance;
 - Coding Tools MCP / local-machine routing;
-- SG MCP coding-workspace routing;
-- EverOS historical-recovery routing;
+- direct server WebCodex connector routing;
+- EverOS-Tunnel historical-recovery routing;
 - implementation / review / verification / handoff workflows;
 - the current OpenAI adapter and icon.
 
@@ -20,7 +21,26 @@ policy:
   allow_implicit_invocation: false
 ```
 
-This is the current accepted **explicit-only** baseline. It reduces accidental activation of project governance during ordinary chat or one-off work.
+This remains the explicit-only baseline. It reduces accidental activation of project governance during ordinary chat or one-off work.
+
+## Governance model
+
+For GitHub-backed projects:
+
+```text
+GitHub Issue → branch/worktree → PR → checks/review → merge
+```
+
+Project Workbench keeps coordination state that GitHub does not own:
+
+- Work Nodes
+- Session Pins
+- write ownership
+- protected invariants
+- live/deployment evidence
+- handoff
+
+For local-only projects, local fallback tracking remains available.
 
 ## Codex
 
@@ -28,7 +48,7 @@ Invoke explicitly with `$project-workbench`.
 
 ## ChatGPT
 
-Package this directory as a Skill. The public default remains explicit-only. A ChatGPT deployment may deliberately opt into implicit discovery after testing its anti-ceremony boundary; that is an adapter policy choice, not a change to the canonical workflow.
+Package this directory as a Skill. The public default remains explicit-only.
 
 ## Claude Code
 
@@ -40,5 +60,4 @@ disable-model-invocation: true
 
 to the `SKILL.md` frontmatter. Invoke explicitly with `/project-workbench`.
 
-The platform adapters may differ. The workflow body, authority model, EverOS boundary and safety semantics should remain aligned.
-
+Platform adapters may differ. The workflow body, authority model, connector routing, EverOS boundary, and safety semantics should remain aligned.
