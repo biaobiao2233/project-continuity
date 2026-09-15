@@ -6,6 +6,7 @@ It includes:
 
 - Project Continuity / ownership / acceptance semantics;
 - GitHub-first issue and pull request governance with local fallback;
+- proportional task governance so small work stays small;
 - local-machine connector routing;
 - direct server WebCodex connector routing;
 - EverOS-Tunnel historical-memory routing;
@@ -15,14 +16,36 @@ It includes:
 
 ## Invocation policy
 
-The checked-in `agents/openai.yaml` uses:
+The checked-in ChatGPT/OpenAI adapter uses:
 
 ```yaml
 policy:
   allow_implicit_invocation: true
 ```
 
-The Skill description is intentionally narrow enough to auto-discover Project Workbench for real software/project continuity work while excluding ordinary chat and unrelated content tasks. Explicit invocation still works when the user wants to force the workflow.
+The description is intentionally narrow: auto-discovery is for ongoing/resumable project work, handoff, continuity, governance, live-state work, or multi-agent coordination. Ordinary chat, isolated code questions, one-off low-risk edits, and isolated reviews that do not need continuity/governance are explicitly excluded. Explicit invocation still works when the user wants to force the workflow.
+
+Other platforms may use different adapter policies. Codex and Claude Code guidance remains explicit by default unless their own adapter is deliberately changed.
+
+## Proportional governance
+
+Use the smallest process that preserves correctness:
+
+```text
+L0  ordinary chat / simple question
+    → answer directly
+
+L1  one-off low-risk edit
+    → inspect → edit → verify → finish
+
+L2  resumable / multi-file project work
+    → minimum useful continuity, usually a Work Node + focused checks
+
+L3  multi-agent / production / security / migration / architecture
+    → explicit ownership + canonical tracker + required gates/review
+```
+
+Do not create Issue/PR/Work Node/review ceremony merely to demonstrate that the workflow was used.
 
 ## Governance model
 
@@ -48,6 +71,8 @@ Do not maintain a duplicate local Issue register when GitHub is canonical. For l
 
 Once objective, scope, authorization, and next action are clear, continue through safe deterministic steps to the next real gate rather than asking the user to reply `继续` after each step. Pause only for missing input, new authorization, ownership ambiguity, meaningful scope/risk change, or an actual blocker without a safe fallback.
 
+Tools, MCPs, Skills, and governance structures are means, not the objective. Choose the shortest safe evidence/tool path that satisfies the user goal. Once the goal or acceptance gate is met, stop instead of expanding into optional optimization.
+
 ## Connector routing
 
 Current user deployment examples, when available:
@@ -61,11 +86,11 @@ Always discover actual current availability instead of assuming these bindings e
 
 ## Codex
 
-Invoke explicitly with `$project-workbench`.
+Invoke explicitly with `$project-workbench` unless the Codex adapter is deliberately configured otherwise.
 
 ## ChatGPT
 
-Package this directory as a Skill. Matching project-development requests may invoke it implicitly; users can still invoke it explicitly.
+Package this directory as a Skill. Matching ongoing project-continuity requests may invoke it implicitly; users can still invoke it explicitly.
 
 ## Claude Code
 
