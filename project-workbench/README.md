@@ -13,16 +13,16 @@ It includes:
 - implementation / review / verification / handoff workflows;
 - the current OpenAI adapter and icon.
 
-## Default invocation policy
+## Invocation policy
 
 The checked-in `agents/openai.yaml` uses:
 
 ```yaml
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true
 ```
 
-This remains the explicit-only public baseline and avoids applying project governance to ordinary chat or one-off work.
+The Skill description is intentionally narrow enough to auto-discover Project Workbench for real software/project continuity work while excluding ordinary chat and unrelated content tasks. Explicit invocation still works when the user wants to force the workflow.
 
 ## Governance model
 
@@ -65,7 +65,7 @@ Invoke explicitly with `$project-workbench`.
 
 ## ChatGPT
 
-Package this directory as a Skill. The public adapter remains explicit-only.
+Package this directory as a Skill. Matching project-development requests may invoke it implicitly; users can still invoke it explicitly.
 
 ## Claude Code
 
