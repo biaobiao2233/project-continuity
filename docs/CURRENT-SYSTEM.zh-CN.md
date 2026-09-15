@@ -19,10 +19,11 @@
 Project Workbench Skill
   ├─ continuation / handoff routing
   ├─ Session Pin / ownership safety
-  ├─ Issue → Work Node → Candidate → Gate
-  ├─ Coding Tools / local-machine routing
-  ├─ SG coding-workspace routing
-  └─ EverOS historical recovery routing
+  ├─ proportional governance
+  ├─ GitHub-first Issue / PR governance + local fallback
+  ├─ local-machine connector routing
+  ├─ direct server WebCodex routing
+  └─ EverOS-Tunnel historical recovery routing
 
 EverOS
   └─ derived semantic memory / cross-agent historical index
@@ -35,7 +36,9 @@ repo / files / tests / live state
 
 - **Project Continuity** 保存每个项目的当前状态和 authority；
 - **Project Workbench** 决定 Agent 接手项目时按什么顺序读取、验证和执行；
-- **EverOS** 在 Project Spine 信息不足时提供跨会话、跨 Agent、跨项目的历史线索；
+- **GitHub** 在已有正式仓库的项目中负责 durable Issue / PR / commit / CI / merge 记录；
+- **EverOS-Tunnel** 是当前优先的历史语义检索入口，旧 EverOS connector 只作 fallback；
+- **WebCodex** 为已接入的目标主机提供直接 live/repo 操作路径；
 - **repo / files / live state** 负责证明现在真实发生了什么。
 
 ## 当前公开了什么
@@ -43,9 +46,9 @@ repo / files / tests / live state
 - Project Continuity v1.1 协议；
 - Project Spine / Work Node / Resume Point / Closure Memory 模板；
 - Multi-Conversation Coordination / Session Pin / `OWNERSHIP_UNCERTAIN`；
-- GitHub-style Issue / Candidate / Review / Release governance；
+- GitHub-first Issue / PR / Review / Release governance 与 local fallback；
 - 当前 Project Workbench Skill core；
-- Coding Tools MCP / SG MCP / EverOS 路由规则；
+- local-machine connector / direct server WebCodex / EverOS-Tunnel 路由规则；
 - ChatGPT / Codex / Claude Code / generic agent 集成说明；
 - Compact / Full 两种示例项目；
 - EverOS 与多项目联动的 authority 边界；
@@ -67,16 +70,13 @@ repo / files / tests / live state
 
 `project-workbench/` 的默认目标是与当前 accepted user-level Project Workbench package 保持 **public-safe parity**，而不是长期维护一个“公开精简版”。Workflow、authority、tool-routing、review/handoff 语义保持一致；机器专属路径、设备别名或私人配置允许在公开版中脱敏。
 
-当前公开默认策略：
+当前 invocation policy 是 **adapter-specific**，不是 canonical core 的单一布尔开关：
 
-```yaml
-policy:
-  allow_implicit_invocation: false
-```
+- checked-in ChatGPT/OpenAI adapter：`allow_implicit_invocation: true`，但 description 明确只匹配持续/可恢复项目、handoff、continuity、live-state、GitHub governance 或多 Agent 协作，并排除普通聊天、一次性低风险修改和不需要连续性的独立 review；
+- Codex：当前仍推荐 explicit `$project-workbench`；
+- Claude Code：当前仍推荐 explicit `/project-workbench`。
 
-也就是 **explicit-only**。原因是 Project Workbench 会触发项目状态恢复、repo/live verification 和治理流程；默认显式调用可以避免普通聊天或简单一次性任务被项目工作流劫持。
-
-不同平台可以自行提供 adapter，但如果改变 implicit policy，应把它视为平台策略变化，而不是静默改写 canonical workflow。
+不同平台可以使用不同 invocation metadata，但共享同一套 authority、scope、ownership、review、EverOS boundary 与安全语义。
 
 ## 多项目如何共享记忆但不共享 authority
 
@@ -99,9 +99,10 @@ EverOS 则可以作为共享的 derived historical layer，让 Project B 的 Age
 已经工作的部分：
 
 - Project Workbench 的 Receiver 流程明确把 EverOS 放在 Project Spine / Closure 之后；
-- 有 EverOS memory tools 时，可以用 `memory_search` / `memory_get` 等做历史恢复；
+- 当前 ChatGPT dogfood 优先使用 `EverOS-Tunnel` 的 `memory_search` / `memory_get` 等做历史恢复；
 - 检索结果只作为 derived clue，必须按需要回 source / repo / live state；
-- EverOS Control Center 当前真正相对成熟的是**同步流程**；搜索、记忆原件和 pipeline / run history 虽然已有界面和数据链路，但仍属早期实验，其中记忆原件可读性明显不足，不能当成成熟阅读器；
+- 已有目标主机直连 WebCodex 时，服务器工作优先直接走对应 connector，而不是默认绕本机 SSH/旧代理；
+- GitHub-backed 项目默认使用 GitHub 作为 durable Issue/PR ledger，本地 Continuity 只保留协调与 runtime facts；
 - 每个项目仍由自己的 Project Continuity 文件保存当前 state / handoff / acceptance。
 
 目前**没有**自动做的部分：
@@ -112,7 +113,9 @@ EverOS 则可以作为共享的 derived historical layer，让 Project B 的 Age
 - 不依赖后台 daemon 抢占项目 ownership；
 - Control Center 目前还不是 Project Continuity 的写入数据库。
 
-另外，**当前 v1.x 仍然主要依赖 Agent / 用户显式进入 Project Workbench，再读取 Project Spine。** 这不是最终形态。已明确列入 v3 的长期目标是 automatic project context feed：由 host/runtime/adapter 在 Agent 开始工作之前自动 materialize 当前项目的最小连续上下文，从而降低对 Agent 工具调用积极性和提示词遵循质量的依赖。Codex 是优先目标，其他 coding Agent 和技术上可接入的 Web AI 客户端随后复用同一 Context Packet contract。
+当前 v1.x 仍然依赖 Skill/Agent 主动进入项目连续性流程；ChatGPT 的 narrow implicit discovery 只是降低手动触发成本，Codex/Claude 仍可保持显式调用。这不是最终形态。
+
+已明确列入 v3 的长期目标是 automatic project context feed：由 host/runtime/adapter 在 Agent 开始工作之前自动 materialize 当前项目的最小连续上下文，从而降低对 Agent 工具调用积极性和提示词遵循质量的依赖。Codex 是优先目标，其他 coding Agent 和技术上可接入的 Web AI 客户端随后复用同一 Context Packet contract。
 
 这里必须区分：`implicit Skill invocation` 仍由模型决定是否触发；automatic context feed 是模型决策之前的 host/runtime-side context materialization。
 
