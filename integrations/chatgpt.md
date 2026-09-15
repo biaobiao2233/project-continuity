@@ -4,29 +4,31 @@
 
 ChatGPT Skill 可以使用仓库里的 `project-workbench/` 作为 canonical core。
 
-当前公开 package 采用 **explicit-only** 作为安全默认值。这样普通聊天、无关研究、一次性简单编辑不会因为 description 误匹配而进入 Project Continuity 工作流。
-
-如果某个 ChatGPT 环境经过真实 anti-ceremony dogfood 后希望自动匹配，可以把 implicit discovery 当成**平台 adapter policy**单独开启；不要静默修改 canonical core。
+当前 checked-in ChatGPT/OpenAI adapter 开启 **implicit discovery**，但触发边界是刻意收窄的：只面向持续/可恢复项目、handoff、Project Continuity、live-state、GitHub 治理或多 Agent 协作。普通聊天、简单代码问题、一次性低风险编辑，以及不需要连续性/治理的独立 review 不应自动进入完整 Project Workbench 流程。
 
 示例 `agents/openai.yaml`：
 
 ```yaml
 interface:
   display_name: "Project Workbench"
-  short_description: "Project continuity, MCP workflows, review, and handoff"
+  short_description: "GitHub-first continuity for ongoing projects and handoffs"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true
 ```
 
-平台 metadata 不属于 canonical core；其它 Agent 不需要复制 `agents/openai.yaml`。
+这里的 implicit discovery 是 **ChatGPT adapter policy**，不是 Project Continuity authority model 本身。其它平台可以继续显式调用。
 
 ## Global instructions
 
-可参考 `prompts/global-guidance.zh-CN.md`，把稳定不变量放入 ChatGPT Custom Instructions。
+平台中立模板见 `prompts/global-guidance.zh-CN.md`。
 
-不要把项目 current state 写进账号级提示词。
+当前 dogfood 的可直接粘贴 ChatGPT 用户级绑定见：
+
+- `prompts/chatgpt-custom-instructions.zh-CN.md`
+
+它只保存长期稳定行为原则和当前 connector routing；详细执行 SOP 继续由 Project Workbench Skill 负责。不要把项目 current state 写进账号级提示词。
 
 ## Handoff
 
@@ -34,7 +36,8 @@ fresh ChatGPT conversation 不应因为看到旧 Session Key 就继承旧会话 
 
 ## Future: Web automatic context feed
 
-网页版同样是 Project Continuity runtime-injection 的目标场景：理想状态不是让用户每次新对话都提醒“先读 Project Spine”，也不是依赖模型是否主动触发 Skill，而是在平台能力允许时由 native project/system-context hook、browser/local companion 或其它可审计 adapter，在模型开始处理任务前提供当前项目的最小 Context Packet。
+implicit Skill invocation 仍由模型决定是否触发；它不等于 automatic project context feed。
 
-当前仓库**没有声称这个 Web 自动注入已经实现**。具体实现必须以目标平台真实暴露的能力为准；如果不存在可靠 pre-turn injection surface，就保持现有 explicit workflow，而不是伪造“无感自动接手”。
+长期理想状态是在平台能力允许时，由 native project/system-context hook、browser/local companion 或其它可审计 adapter，在模型开始处理任务前提供当前项目的最小 Context Packet。这样模型即使没有主动想到调用 Skill，也能先拿到必要的 current project context。
 
+当前仓库**没有声称这个 Web 自动注入已经实现**。具体实现必须以目标平台真实暴露的能力为准；如果不存在可靠 pre-turn injection surface，就保持当前 Skill/显式读取路径，而不是伪造“无感自动接手”。
