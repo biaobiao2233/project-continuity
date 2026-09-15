@@ -4,4 +4,4 @@ interface:
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:
-  allow_implicit_invocation: false
+  allow_implicit_invocation: true
