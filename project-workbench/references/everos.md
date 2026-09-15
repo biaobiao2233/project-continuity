@@ -1,6 +1,6 @@
 # EverOS Usage
 
-Use EverOS only when its memory tools are actually available in the current account/session. Treat it as a read-mostly semantic/historical memory and index across agent sessions. It is useful for discovery; it is not the authoritative current project ledger.
+Use EverOS only when its memory tools are actually available in the current account/session. Prefer the current direct EverOS connector (for example EverOS-Tunnel) when available. Treat it as read-mostly semantic/historical memory and index across agent sessions. It is useful for discovery; it is not the authoritative current project ledger.
 
 ## Correct evidence level
 
@@ -20,13 +20,10 @@ When the corresponding tools exist:
 
 - Use `memory_status` only when health/availability matters.
 - Use `memory_search` for semantic historical questions such as why a decision was made, which prior agent/session handled something, or what earlier experiments found.
-- Use focused queries; prefer project/topic names, exact terms, and the missing decision/fact. Do not sweep unrelated user history.
-- Use returned provenance/session IDs to narrow the source.
 - Use `memory_get` when an exact session ID is known and the bounded episode/profile/case is needed.
 - Use `memory_list_sources` only to inventory configured source partitions when necessary.
+- Use focused queries; prefer project/topic names, exact terms, and the missing decision/fact. Do not sweep unrelated user history.
 - Treat `partial`, timeout, or stale/derived results as incomplete, not as absence of history.
-
-If those tools are unavailable, state the limitation instead of pretending historical memory was checked.
 
 ## Write boundary
 
