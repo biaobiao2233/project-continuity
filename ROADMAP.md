@@ -55,7 +55,7 @@ Project Continuity 的路线图按**真实使用摩擦**推进，不以“版本
 
 这是一个明确的长期方向：**不要把 Project Continuity 的正确使用建立在 Agent 是否愿意主动调用 Skill、主动打开 Project Spine、或是否完全遵循提示词之上。**
 
-当前 `Project Workbench` explicit-only 是 v1.x 的安全工作流入口；未来 runtime injection 的目标与“implicit Skill invocation”不同：
+当前 v1.x 仍以 Project Workbench Skill 作为工作流入口，但 invocation policy 已允许按 adapter 区分：ChatGPT/OpenAI adapter 可以使用 narrow implicit discovery，Codex / Claude Code 仍可保持显式调用。未来 runtime injection 的目标与“implicit Skill invocation”不同：
 
 ```text
 session start / project switch / resume
