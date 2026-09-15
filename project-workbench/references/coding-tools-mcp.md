@@ -1,6 +1,8 @@
 # Coding Tools MCP / Local-Machine MCP
 
-Use the available local-machine/Coding Tools MCP when the task depends on the user's Windows machine, local repos, services, staging/production, host roots, or machine-side files. A deployment may expose this under a device-specific name; do not assume another account/session has the same name or capabilities.
+Use the available local-machine/Coding Tools MCP when the task depends on the user's Windows machine, local repos, services, staging/production, host roots, or machine-side files.
+
+Prefer direct server connectors when the target server already has an authorized WebCodex/Tunnel connector. Use local-machine MCP only for resources that actually live on the user's device.
 
 ## Discover actual capability first
 
@@ -15,7 +17,12 @@ Keep separate:
 - Staging runtime/evidence
 - Active release pointer/artifact
 
-Before and after a risky staging/release operation, recheck the protected production endpoint/process/pointer when the Work Node requires it.
+## Routing
+
+- Windows files, local repositories, desktop-only services → local-machine MCP.
+- SG/HK/US/KR server work when the corresponding WebCodex connector exists → that server connector first.
+- Historical decisions and old conversations → EverOS connector.
+- If a preferred connector is unavailable, state the limitation and use an authorized fallback.
 
 ## Read-first workflow
 
@@ -30,28 +37,11 @@ Prefer bounded read tools offered by the current MCP, commonly:
 - `git_show`
 - `server_info`
 
-Use a bounded command tool for tests or a read-only Git fallback when a dedicated helper cannot resolve the repo. Do not interpret a tool limitation as evidence about the code.
+Use bounded command tools for tests or validation. Do not interpret a tool limitation as evidence about the code.
 
 ## Modification rule
 
-Use the MCP's documented direct patch/write mechanism (for example `apply_patch` / `host_apply_patch`) for direct file modifications. Do not edit files through shell redirection, ad-hoc editing scripts, `sed -i`, PowerShell content replacement, or similar command side effects when the MCP contract designates patching as the direct modification path.
-
-Preserve unrelated and concurrent changes. Inspect final status/diff.
-
-## Review mode
-
-When asked for an independent/read-only review:
-
-- Re-read the current Project Spine/Work Node and actual current diff/artifact.
-- Do not assume prior findings were fixed correctly.
-- Do not modify source, Project Continuity, production, or external state.
-- Run read-only/focused checks only when authorized by the review contract.
-- Return evidence by severity and the contract's verdict vocabulary (for example `PASS_FOR_<NODE>` or `REPAIR_FIRST`).
-- Reviewer verdict remains Reviewer Evidence until Primary independently accepts it.
-
-## Machine/GUI boundary
-
-Prefer file/repo/command tools over GUI. Do not use desktop control unless the user explicitly asks for GUI operation. If GUI is user-operated, do not compete for the desktop.
+Use the MCP's documented direct patch/write mechanism. Preserve unrelated and concurrent changes. Inspect final status/diff.
 
 ## Production boundary
 
