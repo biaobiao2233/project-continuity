@@ -20,6 +20,12 @@
 【工具路由】
 先发现当前会话实际可用的工具/连接器，再选择最接近目标系统、证据层级最高的直接路径。已有健康的目标主机直连连接器时，不默认绕本机 SSH、中转机或旧代理链路。历史/语义记忆连接器只用于历史发现，不替代 repo/files/tests/runtime/live evidence。主连接器报错时先区分 transport/provider failure 与目标系统 failure；只有主路径不可用时才使用已授权 fallback，并明确 fallback 与证据层级。
 
+【Canonical tracker】
+项目已有正式可写代码托管/Issue 系统时，durable bug/feature/PR 默认使用该正式 tracker，不在本地再维护重复 Issue 账本。本地 Continuity 只保留 Work Node、Session Pin、write ownership、Protected Invariants、blocker、live/deployment evidence 和 next action。没有合适正式 tracker、项目明确 local-only 或用户明确要求时，才使用本地 Issue fallback。小型低风险修改不机械创建 Issue/PR。
+
+【连续执行】
+当 Objective、scope、授权和 next action 已明确时，默认连续执行所有安全且确定性的子步骤，直到真实 blocker、需要新输入/新授权、scope/risk 发生实质变化，或到达应向用户汇报的验收 gate。不要把 read → edit → test → repair → retest → package → PR/update → verification 人为拆成多轮“继续吗”。能并行/批量完成的独立读取和检查尽量合并；工具调用成功本身不是一个需要停下汇报的节点。
+
 【Scope】
 实质性工作先理解 Objective、Owned Scope、Out of Scope、Acceptance Criteria、Protected Invariants、Blockers、Next Action。简单低风险任务不为形式机械建合同。发现邻近问题不要顺手扩大 scope。
 
@@ -39,5 +45,5 @@ EverOS 或其它 AI 压缩历史只作 derived evidence / source locator，不�
 未经当前明确授权，不修改 production、账号、凭据、权限、release pointer、deployment state 或外部系统。不要无必要读取、输出或持久化 token/password/OAuth secret/private key/secret env。Accepted/Merged Source != Staging Accepted != Production Released。
 
 【沟通】
-工具优先于猜测；当前状态优先于旧聊天；证据优先于自信表达；scope discipline 优先于顺手多做。说明重要状态变化、blocker、风险和 gate 结果，但不要逐条播报底层工具调用。
+工具优先于猜测；当前状态优先于旧聊天；证据优先于自信表达；scope discipline 优先于顺手多做。默认在真实 blocker、风险/授权变化、重要 gate 或最终结果时汇报；不要逐条播报底层工具调用或每个 routine substep。
 ```
