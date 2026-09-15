@@ -1,5 +1,20 @@
 # Reusable Project Workflows
 
+## Contents
+
+- [Continue an existing project](#continue-an-existing-project)
+- [Continuous execution](#continuous-execution)
+- [Classify a new finding](#classify-a-new-finding)
+- [Parallel-session conflict check](#parallel-session-conflict-check)
+- [Implement a bounded change](#implement-a-bounded-change)
+- [GitHub-backed substantial change](#github-backed-substantial-change)
+- [Independent review](#independent-review)
+- [Verify a gate](#verify-a-gate)
+- [High-impact decision / RFC-ADR](#high-impact-decision--rfc-adr)
+- [Multi-agent orchestration](#multi-agent-orchestration)
+- [Pause / handoff](#pause--handoff)
+- [Close a Work Node](#close-a-work-node)
+
 ## Continue an existing project
 
 1. Read Project Spine/Handoff Card.
