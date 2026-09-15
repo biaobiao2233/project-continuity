@@ -92,7 +92,7 @@ The project deliberately avoids adding a database, daemon, heartbeat, proxy or a
 
 Platform notes are under `integrations/`.
 
-The public Project Workbench package defaults to **explicit-only** invocation (`allow_implicit_invocation: false`). Platforms may opt into implicit discovery as an adapter policy, but that is not the canonical default.
+Invocation policy is adapter-specific while the workflow/authority core stays shared. The checked-in ChatGPT/OpenAI adapter uses **narrow implicit discovery** (`allow_implicit_invocation: true`) for ongoing/resumable project work and explicitly excludes one-off low-risk edits/reviews. Codex and Claude Code remain explicit by default unless their own adapters are deliberately changed.
 
 ## License
 
