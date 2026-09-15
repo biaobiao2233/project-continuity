@@ -1,68 +1,73 @@
 ---
 name: project-workbench
-description: "Use for software/project work that benefits from the user's repeatable operating workflow: continuing or handing off a project, resolving Project Continuity/Project Spine and Work Nodes, coordinating multiple concurrent ChatGPT/Agent sessions with Session Pin/write-ownership safety, inspecting repo or live state, implementing or reviewing through available coding/local-machine MCPs, recovering historical clues through EverOS, coordinating Codex/Antigravity or other agents, and managing Issue → Work Node → Candidate → Review Gate → staging/release. Trigger on requests like 继续项目、下一步、接上、审查、查账本、并行对话/串台、Session Pin、看 repo 状态、用 EverOS 找历史、用 SG/MCP 改代码、更新 Work Node/Issue/Gate. Do not use for ordinary chat, unrelated research, music, or general writing/content creation without a project-development workflow."
+description: "Use for software/project work that needs continuity, handoff, live-state inspection, multi-agent coordination, GitHub-backed issue/PR governance, or bounded implementation/review. Trigger when continuing or handing off projects, resolving Project Spine/Work Nodes/Session Pins/write ownership, inspecting repos or servers through WebCodex/local connectors, searching historical decisions through EverOS-Tunnel, or managing substantial GitHub Issues/PRs and release gates. For GitHub-hosted projects, prefer GitHub as the durable issue/PR source of truth and keep local continuity for coordination/runtime facts; use local issue tracking only as fallback. Do not use for ordinary chat or unrelated content tasks."
 ---
 
 # Project Workbench
 
-Use this skill as a compact control plane for repeatable project-development work. Prefer current project files, repository state, and live evidence over remembered conversation state.
+Use this skill as a compact control plane for repeatable project-development work. Prefer current project files, repository state, and live evidence over remembered conversation state. Keep durable tracking, execution coordination, live runtime evidence, and historical memory on the surface best suited to each job.
 
 ## Core workflow
 
 1. **Resolve the real current state first.**
-   - Read the project's Project Spine / handoff entry when it exists.
-   - Route in this order: current explicit user task/switch → existing valid Session Pin → the bound Work Node's current state/ownership → Project Primary Focus / Parallel Active Work Registry → only an unpinned new session defaults to the project-level focus.
-   - A later project-level focus change must not silently reroute a still-valid Session Pin. If claimant continuity for an existing logical Session Key is ambiguous, do not inherit that row/scope; fail closed to read-only and resolve identity/ownership first.
-   - Read only the requirements, invariants, relevant predecessor Closure Memory, repo docs, and live state needed for the task.
-   - Never assume an Active Node, version, branch, candidate, acceptance state, ownership, or production state from an old chat when current evidence can answer it.
+   - Read the project's Project Spine / Handoff when one exists.
+   - Route in this order: current explicit user task/switch → existing valid Session Pin → bound Work Node state/ownership → Project Primary Focus / active registry → only an unpinned fresh session defaults to project-level focus.
+   - Never assume version, branch, candidate, acceptance state, ownership, blocker, or production state from an old chat when current evidence can answer it.
 
-2. **Route to the right evidence/tool layer.**
-   - For Project Continuity, Work Nodes, Closure Memory, Issue/Blocker/Gate governance, and RFC/ADR discipline: read [references/project-continuity.md](references/project-continuity.md).
-   - For Windows/local-machine, repo, staging, production, host-root, or Coding Tools MCP operations: read [references/coding-tools-mcp.md](references/coding-tools-mcp.md).
+2. **Choose the canonical surface before writing.**
+   - For Project Continuity, Work Nodes, Session Pins, write ownership, acceptance semantics, and local fallback governance: read [references/project-continuity.md](references/project-continuity.md).
+   - For GitHub-backed Issues, branches, PRs, commits, CI, and merge lifecycle: read [references/github.md](references/github.md).
+   - For Windows/local-machine repos, files, and services: read [references/coding-tools-mcp.md](references/coding-tools-mcp.md).
+   - For SG/HK/US/KR or other directly connected servers: read [references/server-connectors.md](references/server-connectors.md).
    - For semantic/historical recovery across prior agent sessions: read [references/everos.md](references/everos.md).
-   - For coding operations inside an SG MCP workspace: read [references/sg-mcp.md](references/sg-mcp.md).
    - For implementation, review, verification, delegation, handoff, and closure patterns: read [references/workflows.md](references/workflows.md).
-   - Use the tools actually available in the current account/session. Never invent a tool, connector, mount, path, or capability because another account had it.
+   - Discover the tools actually available in the current session. Never invent a connector, host alias, mount, path, permission, or capability.
 
-3. **Classify new friction before changing scope.**
-   - Ask whether a new finding is: **part of the current task**, a **temporary Blocker**, or an **independent Issue**.
-   - Keep in-scope findings in the current implementation/review/repair cycle.
-   - Keep transient waits, one-off timeouts, normal dependencies, and one-time user interactions as Blockers unless they expose a durable problem.
-   - Record durable out-of-scope problems/requirements as Issues for triage; do not opportunistically widen the Active Work Node.
+3. **Use GitHub-first governance without creating a second ledger.**
+   - If the project has a suitable writable GitHub repository, use GitHub as the durable source of truth for substantial feature/bug Issues and PR candidates.
+   - Keep local Project Continuity for execution contracts and transient coordination: Work Node, Session Pin, write ownership, protected invariants, live/deployment evidence, blockers, and next action.
+   - Link GitHub Issue/PR identifiers from the Work Node; do not copy their full bodies into a parallel local Issue register.
+   - If the project has no suitable GitHub repository, is intentionally local-only, or the user explicitly wants local tracking, use the local Issue/Work Node fallback.
+   - Do not force Issue/PR ceremony for small low-risk edits unless repository policy, user intent, or risk requires it.
 
-4. **Respect authority and acceptance.**
+4. **Classify new friction before changing scope.**
+   - **Current-task finding** → keep it in the current implementation/review/repair cycle.
+   - **Temporary Blocker** → record it on the current Node; do not create a durable Issue by default.
+   - **Independent Issue** → record it in the project's canonical tracker (GitHub when GitHub is canonical; otherwise local) and triage separately.
+   - Do not opportunistically widen the Active Work Node.
+
+5. **Respect authority, ownership, and acceptance.**
    - Treat current explicit user intent/authorization as highest authority.
    - Prefer independently verified Accepted Project State and reproducible repo/live evidence over worker reports or summaries.
    - Keep Worker Claim, Reviewer Verdict, Independent Evidence, Primary Acceptance, and Accepted State distinct.
-   - When a Work Node or task contract requires independent review/verification, do not let the implementer self-accept that Node; otherwise follow that task's required checks and Primary acceptance policy.
+   - Before shared writes, check Session Pins and write scopes. Overlapping writes serialize unless physically isolated.
+   - A fresh/cold conversation must not silently reuse an existing logical Session Key. Ambiguous claimant/ownership means shared/candidate writes stay read-only until resolved.
 
-5. **Stay inside scope and verify before claiming completion.**
+6. **Verify before claiming completion.**
    - Preserve Objective, Owned Scope, Out of Scope, Acceptance Criteria, Protected Invariants, dependencies, blockers, and next action.
-   - Before parallel/shared writes, check active Session Pins and write scopes. Overlapping writes serialize unless physically isolated; central shared surfaces use read-before-write + narrow patch, and any context mismatch requires re-read/merge rather than stale overwrite.
-   - A fresh/cold conversation must not silently reuse an existing logical Session Key. Duplicate/ambiguous claimant or ownership evidence means `OWNERSHIP_UNCERTAIN`; shared/candidate writes stay read-only until resolved.
-   - Do not perform unrelated cleanup, dependency upgrades, refactors, production changes, or policy changes.
-   - Inspect final diff/status and run the focused checks required by the Work Node.
-   - For production/staging-sensitive work, independently recheck live version, endpoint/port/process ownership, release pointer/artifact, rollback, and cleanup boundaries as applicable.
+   - Inspect final diff/status and run the checks required by the Work Node or repository policy.
+   - For production/staging-sensitive work, independently recheck the relevant live version, endpoint/process ownership, release pointer/artifact, rollback, and cleanup boundaries.
    - A timeout, permission denial, partial test run, provider error, or worker statement is not PASS.
 
-6. **Update continuity only with high-signal accepted/current facts.**
-   - After meaningful work, update the Work Node/Handoff with compact evidence and the real next action when authorized and appropriate.
-   - On closure, write a compact Closure Memory rather than a chronological transcript.
-   - Do not dump raw prompts, long logs, secrets, duplicated source material, or whole diffs into project memory.
+7. **Update only high-signal continuity.**
+   - After meaningful work, update the Work Node/Handoff with compact current evidence and the real next action when appropriate.
+   - For GitHub-backed work, record Issue/PR/commit links or identifiers instead of duplicating GitHub content.
+   - On closure, write compact Closure Memory rather than a chronological transcript.
+   - Do not dump raw prompts, long logs, secrets, duplicated source material, or whole diffs into continuity files.
 
 ## Default interaction style
 
-- Use tools when the task depends on current files, repo state, machine state, or prior project records; do not substitute generic advice for available evidence.
+- Use tools when the task depends on current files, repo state, machine state, GitHub state, or prior project records; do not substitute generic advice for available evidence.
+- Prefer the closest healthy direct connector to the target system. Do not route server work through the user's PC when a direct authorized server connector is available.
 - Keep the user informed about meaningful state transitions, blockers, risks, and gate results without narrating every low-level tool call.
 - Do not take over the desktop/GUI unless the user explicitly asks for GUI control.
 - Do not expose credentials, tokens, OAuth secrets, private keys, or secret environment values.
-- When a required tool is unavailable, state the exact limitation and use the nearest safe evidence path; do not fabricate results.
-- Apply governance proportionally: use Issue/Milestone/Candidate/Gate/RFC structure when it improves safety or continuity, not as bureaucracy for trivial edits.
+- Apply governance proportionally; avoid ceremony for trivial work.
 
 ## Fast routing examples
 
-- **“继续这个项目 / 下一步是什么”** → current explicit task → valid Session Pin if one exists → bound Work Node → project-level focus only for an unpinned new session → relevant Closure → repo/live verification.
-- **“帮我改这个项目”** → continuity contract → inspect repo → implement through the appropriate available coding MCP/tool → tests/diff → Worker Claim → independent verification if required.
-- **“独立审查一下”** → read current contract and actual current diff/artifact yourself → stay read-only unless explicitly changed to implementation → evidence-based verdict.
-- **“之前为什么这么做”** → Project Continuity first; if insufficient, use EverOS for clues/session IDs, then return to source/current evidence.
-- **“又发现一个问题”** → classify current-task vs Blocker vs Issue before acting; do not widen scope automatically.
+- **“继续这个项目 / 下一步是什么”** → resolve Pin/Work Node → canonical tracker references → repo/live verification → perform next action.
+- **“修 GitHub 上这个 bug”** → GitHub Issue/PR state → local/server working tree → implement/test → PR/review/merge as required.
+- **“帮我改服务器上的项目”** → direct target-server connector → repo/runtime state → bounded change → tests/live verification.
+- **“之前为什么这么做”** → continuity/source pointers first → EverOS-Tunnel if history is missing → exact source/live verification.
+- **“又发现一个问题”** → classify current-task vs Blocker vs Independent Issue → use canonical tracker without duplicating ledgers.
