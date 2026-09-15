@@ -104,7 +104,7 @@ Issue
 → Closure Memory
 ```
 
-简单修改就保持简单。
+简单修改就保持简单；持续项目也只使用达到正确性与可恢复性所需的最小治理层级。
 
 ## 5 分钟开始使用
 
@@ -136,13 +136,14 @@ Relevant Closure Memory 和 Next Action。
 - [Claude Code](integrations/claude-code.md)
 - [Antigravity / generic agents](integrations/generic-agent.md)
 
-当前公开默认策略：
+当前 invocation policy 按平台 adapter 区分：
 
-- Project Workbench package：**explicit-only**，`allow_implicit_invocation: false`；
-- Codex：`$project-workbench` 显式调用；
-- Claude Code：`/project-workbench` 显式调用；
-- ChatGPT 或其它支持自动匹配的平台可以自行启用 implicit adapter，但这属于平台策略变化，不是 canonical core 默认值；
-- 普通聊天 / 一次性代码修改不应被治理流程劫持。
+- checked-in ChatGPT/OpenAI adapter：**narrow implicit discovery**，`allow_implicit_invocation: true`；只匹配持续/可恢复项目、handoff、continuity、live-state、GitHub governance 或多 Agent 协作；
+- Codex：默认 `$project-workbench` 显式调用；
+- Claude Code：默认 `/project-workbench` 显式调用；
+- ordinary chat、简单代码问题、一次性低风险修改和不需要连续性/治理的独立 review 不应被完整 Workbench ceremony 劫持。
+
+平台中立全局规则模板见 `prompts/global-guidance.zh-CN.md`；当前 ChatGPT dogfood 的可直接粘贴用户级版本见 `prompts/chatgpt-custom-instructions.zh-CN.md`。
 
 ## 与 EverOS 联动
 
@@ -269,7 +270,7 @@ Project Continuity 不是这些项目的 fork，也没有复制它们的源代�
 ├─ docs/                       协议、模板、治理、并发、prior art
 ├─ examples/                   可直接复制的示例项目
 ├─ integrations/               ChatGPT / Codex / Claude Code / generic agent
-├─ prompts/                    可选的全局提示词模板
+├─ prompts/                    可选的全局提示词 / ChatGPT 用户级绑定
 ├─ project-workbench/          canonical Skill core
 ├─ ROADMAP.md
 ├─ CONTRIBUTING.md

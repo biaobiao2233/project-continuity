@@ -70,6 +70,7 @@ For writes:
 - Registry is a coordination view, not a lifecycle/acceptance source of truth. Keep one live Registry only when parallel work actually needs it.
 - Declare minimal write scope. Overlapping active write scopes serialize unless physically isolated, typically by branch/worktree/sandbox.
 - Central shared surfaces are coordinator/single-writer by default. Use read-before-write + narrow patch; if patch context changed, re-read and merge instead of overwriting from a stale snapshot.
+- Temporary non-owner writes to coordinator-owned central fields require a bounded delegation persisted before the write when auditability matters. Record the delegated writer, exact fields/scope, purpose, and expiry/return condition; ad hoc shared writes do not transfer ownership.
 - Reviewer/Verifier stays candidate read-only unless explicitly changing role; editing the candidate ends that independent-review round.
 
 Do not introduce heartbeat, daemon, lock server, automatic cross-chat messaging, or a dependency on private ChatGPT thread IDs merely to implement this protocol.
