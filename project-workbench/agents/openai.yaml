@@ -1,6 +1,6 @@
 interface:
   display_name: "Project Workbench"
-  short_description: "GitHub-first project continuity, connectors, review, and handoff"
+  short_description: "GitHub-first continuity for ongoing projects and handoffs"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:
