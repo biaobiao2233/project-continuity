@@ -1,32 +1,36 @@
-# Server WebCodex connector routing
+# Direct server connector routing
 
-Use direct server connectors when the target server already exposes an authorized WebCodex/Tunnel connector.
+Prefer an authorized direct server WebCodex/Tunnel connector whenever the target actually lives on that server. Discover the current tool inventory first; connector names below are deployment bindings, not assumptions that every session has them.
 
-## Routing
+## Current deployment bindings
 
-- SG WebCodex → Singapore server tasks.
-- HK WebCodex → Hong Kong server tasks.
-- US WebCodex → US server tasks.
-- KR WebCodex → Korea server tasks.
-- Local-machine MCP → Windows/local-only resources.
+When available:
 
-Do not route a server task through Windows, SSH tunnels, or old proxy paths when a healthy direct server connector exists.
+- `WebCodex-SG` → Singapore server.
+- `WebCodex-HK` → Hong Kong server.
+- `WebCodex-US` → US server.
+- `WebCodex-KR` → Korea server.
+- `WebCodex-PC` → user's Windows machine; use only for local-machine targets.
 
-## Verification
+Do not route SG/HK/US/KR work through Windows SSH, legacy Cloudflare paths, or another server merely because those paths existed historically when a healthy direct connector to the target is available.
 
-Before changes:
+## Before changing anything
 
-- confirm the actual connector and target
-- inspect runtime/repo state
-- confirm scope and protected invariants
+1. Confirm the connector resolves to the intended host/project/runner.
+2. Inspect current repo/runtime/service state needed for the task.
+3. Re-read applicable project instructions and protected invariants.
+4. Confirm the requested action is inside existing authorization; root capability does not expand scope.
 
-After changes:
+## Execute and verify
 
-- run focused checks
-- verify relevant live state
-- report evidence separately from claims
+- Prefer bounded native read/patch/process tools exposed by the connector.
+- Preserve unrelated/concurrent changes.
+- Continue through safe inspect → modify → test → repair → retest steps without asking between routine operations.
+- After mutation, inspect the relevant diff/status and live state rather than trusting command success alone.
+- Keep source acceptance, staging acceptance, and production release distinct.
 
-## Safety
+## Fallback
 
-Never assume a server connector exists because another session had it. Discover current capabilities first.
-Never expose credentials or secret environment values.
+If the preferred direct connector is unavailable, identify the exact transport/tool failure and use another already-authorized path only when it preserves scope and safety. Do not report a connector outage as a target-host/product failure.
+
+Never expose credentials, secret environment values, private keys, or tunnel runtime keys.
