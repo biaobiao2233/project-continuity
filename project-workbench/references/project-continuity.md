@@ -1,5 +1,20 @@
 # Project Continuity and Governance
 
+## Contents
+
+- [Authority model](#authority-model)
+- [Receiver/read order](#receiverread-order)
+- [Multi-conversation coordination](#multi-conversation-coordination)
+- [State semantics](#state-semantics)
+- [Work Node discipline](#work-node-discipline)
+- [Choose the canonical tracker](#choose-the-canonical-tracker)
+- [Issue / Blocker classification](#issue--blocker-classification)
+- [GitHub-first lifecycle](#github-first-lifecycle)
+- [Local fallback lifecycle](#local-fallback-lifecycle)
+- [Candidate / Required Review Gate](#candidate--required-review-gate)
+- [RFC / ADR discipline](#rfc--adr-discipline)
+- [Continuity writes](#continuity-writes)
+
 ## Authority model
 
 Use this order when evidence conflicts:
