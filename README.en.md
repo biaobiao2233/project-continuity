@@ -2,7 +2,7 @@
 
 **A cross-agent project memory and handoff protocol for long-running work.**
 
-[中文](README.md) · [Current system](docs/CURRENT-SYSTEM.zh-CN.md) · [Specification](docs/SPECIFICATION.zh-CN.md) · [Templates](docs/TEMPLATES.md) · [EverOS / multi-project integration](docs/EVEROS-INTEGRATION.md) · [Roadmap](ROADMAP.md)
+[中文](README.md) · [Current system](docs/CURRENT-SYSTEM.zh-CN.md) · [Agent setup](docs/AGENT-SETUP.zh-CN.md) · [Specification](docs/SPECIFICATION.zh-CN.md) · [Templates](docs/TEMPLATES.md) · [EverOS / multi-project integration](docs/EVEROS-INTEGRATION.md) · [Roadmap](ROADMAP.md)
 
 Project Continuity helps a fresh AI agent safely resume a project without replaying the entire conversation history.
 
@@ -10,9 +10,9 @@ It is not a chat archive or a vector database. It focuses on three questions:
 
 > **What should be remembered now? What should be trusted? How should the next agent continue?**
 
-Current public baseline: **Project Continuity v1.1 stable protocol + Project Workbench `2.0.0-rc.2` pre-release candidate**. The RC keeps all 47 local tests green and adds real OpenCode 1.18.3 global-rule / Skill-catalog verification; model-level fresh-receiver behavior remains a separate gate. See [v2.0.0-rc.2 release notes](docs/release-notes-v2.0.0-rc.2.md).
+Current public baseline: **Project Continuity v1.1 stable protocol + Project Workbench `2.0.0-rc.3` pre-release candidate**. The RC passes 50 local tests and adds a repository-backed cross-agent Skill/global-guidance installation and migration flow for Codex, OpenCode, ZCode, Antigravity/Gemini and Claude Code; model-level fresh-receiver behavior remains a separate gate. See [v2.0.0-rc.3 release notes](docs/release-notes-v2.0.0-rc.3.md).
 
-The checked-in `project-workbench/` now contains the complete `2.0.0-rc.2` candidate source, tests, examples, OpenCode integration guidance, and paired personalization text. Catalog discovery or local validation does not imply model-level receiver acceptance. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration remain excluded.
+The checked-in `project-workbench/` now contains the complete `2.0.0-rc.3` candidate source, tests, examples, cross-agent installer, portable global-guidance sources, and paired personalization text. File installation or catalog discovery does not imply model-level receiver acceptance. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration remain excluded.
 
 ## Core model
 

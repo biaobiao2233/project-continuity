@@ -2,7 +2,7 @@
 
 ## This package
 
-Treat version 2.0.0-rc.2 as a candidate update of Project Workbench, not as proof that any installed copy, personalization setting, repository release or live workflow has changed. The creation task is code/document/package validation; a real fresh-receiver pilot remains a separate gate.
+Treat version 2.0.0-rc.3 as a candidate update of Project Workbench, not as proof that any installed copy, personalization setting, repository release or live workflow has changed. The creation task is code/document/package validation; a real fresh-receiver pilot remains a separate gate.
 
 Preserve the full existing resource structure and icon. Preserve ChatGPT's current narrow implicit invocation policy. The existing Codex deployment is explicit-only; use `assets/adapters/codex-openai.yaml` for that installation and do not silently enable implicit invocation. OpenCode uses its own global `~/.config/opencode/AGENTS.md` plus native Skill discovery; `~/.agents/skills/project-workbench` is already a supported global Skill source, so avoid a duplicate OpenCode copy unless an intentional same-name override is required. Use `assets/adapters/opencode.md` for the OpenCode-specific guidance layer. Do not alter unrelated host instructions incidentally.
 

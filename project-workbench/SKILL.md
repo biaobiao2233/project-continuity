@@ -82,6 +82,7 @@ Make independent work converge into verified deliveries. Keep directions durable
 | Missing historical context | [everos.md](references/everos.md) |
 | Platform fact sources and capability caveats | [sources.md](references/sources.md) |
 | Candidate rollout, installation policy, paired prompt | [rollout.md](references/rollout.md) |
+| Cross-agent Skill + global-guidance installation/migration | [agent-setup.md](references/agent-setup.md) |
 | Acceptance scenarios and their untested boundaries | [scenarios.md](evals/scenarios.md) |
 
 Preserve the current platform invocation policy. Do not install, replace a user-level Skill, change personalization settings, or publish a release as an incidental step in another task.
