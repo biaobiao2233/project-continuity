@@ -1,0 +1,34 @@
+[
+  {
+    "command": "resume",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "status": "SNAPSHOT_ONLY",
+    "findings": []
+  },
+  {
+    "command": "preflight",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "status": "CHECKS_CLEAR",
+    "findings": []
+  },
+  {
+    "command": "deliver",
+    "expected_exit": 1,
+    "actual_exit": 1,
+    "status": "ATTENTION_NEEDED",
+    "findings": [
+      "CHECK_PENDING_OR_FAILED",
+      "RECORD_SYNC_PENDING",
+      "RECORD_SYNC_PENDING"
+    ]
+  },
+  {
+    "command": "integrate",
+    "expected_exit": 0,
+    "actual_exit": 0,
+    "status": "CHECKS_CLEAR",
+    "findings": []
+  }
+]

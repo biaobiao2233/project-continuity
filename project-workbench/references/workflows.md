@@ -1,137 +1,45 @@
-# Reusable Project Workflows
+# Four operating workflows
 
-## Contents
+Use these flows in the existing connector/runtime. Do not create a second runner or assume the optional local helper performs remote actions.
 
-- [Continue an existing project](#continue-an-existing-project)
-- [Continuous execution](#continuous-execution)
-- [Classify a new finding](#classify-a-new-finding)
-- [Parallel-session conflict check](#parallel-session-conflict-check)
-- [Implement a bounded change](#implement-a-bounded-change)
-- [GitHub-backed substantial change](#github-backed-substantial-change)
-- [Independent review](#independent-review)
-- [Verify a gate](#verify-a-gate)
-- [High-impact decision / RFC-ADR](#high-impact-decision--rfc-adr)
-- [Multi-agent orchestration](#multi-agent-orchestration)
-- [Pause / handoff](#pause--handoff)
-- [Close a Work Node](#close-a-work-node)
+## Recover
 
-## Continue an existing project
+Read the stable project entry, canonical task/PR and existing execution handoff. Confirm source/workspace and only the required environment. Choose current explicit task over project focus; preserve an established continuing pin unless explicitly switched. Use a fresh execution ID for a fresh conversation.
 
-1. Read Project Spine/Handoff Card.
-2. Resolve routing in this order: explicit current task/switch → existing valid Session Pin → bound Work Node state/ownership → Project Primary Focus/Registry → fresh unpinned-session default.
-3. If an old logical Session Key is being reused, verify claimant continuity; fresh/cold or ambiguous claimant must not inherit the existing row/write scope. Use a new key or fail closed to `OWNERSHIP_UNCERTAIN` / read-only until resolved.
-4. Read the bound Node contract, linked canonical tracker items when relevant, and only the predecessor Closure needed for this task.
-5. Recheck current repo/live state and overlapping write ownership where it can change.
-6. Perform the real next action and continue through deterministic in-scope steps to the next actual gate; do not ask the user to repeat information already present or to say `继续` between routine substeps.
+If an older owner has not released shared scope, continue read-only or in a truly isolated, authorized sandbox. Do not block unrelated safe investigation just to manufacture a registry row. End recovery once the next action and its authority are established.
 
-## Continuous execution
+Optional helper: `python scripts/workbench.py resume packet.json` produces a compact projection of an already collected snapshot. It does not find the project or contact connectors.
 
-When Objective, scope, authorization, and next action are already established:
+## Preflight
 
-1. Treat safe deterministic steps as one execution chain, for example `inspect → edit → test → repair → retest → package → PR/update → verify`.
-2. Batch independent reads, searches, and health/status checks when practical.
-3. If a test or validator exposes an in-scope defect with an obvious safe repair, repair it and rerun the affected check instead of stopping for permission.
-4. Give intermediate user updates only for a real blocker, materially changed risk/scope, new required authorization/input, or a meaningful gate the user must act on.
-5. Stop before an irreversible/high-risk action not already authorized, before taking ownership that is ambiguous, or when no safe fallback exists.
-6. Do not widen scope or perform optional risky work merely to avoid asking a question.
+Recover Objective/scope/acceptance/invariants from the existing task. Establish current authorization and required review policy. Inspect code workspace and shared runtime/live resource ownership; batch independent reads. Bind the current source ref and needed contract.
 
-## Classify a new finding
+For parallel work, verify actual branch/worktree isolation and shared resource inventory. Start only the bounded next step; avoid repeatedly rereading every completed historical task.
 
-Before changing scope, classify the finding:
+Optional helper: `python scripts/workbench.py preflight packet.json --peers peers.json` flags declared resource overlap, missing evidence pointers and uncertain execution ownership. A clear result does not grant write authority or establish a live lock.
 
-- **Current-task finding** → keep it in the current implementation/review/repair cycle.
-- **Temporary Blocker** → record on the current Node and continue when unblocked.
-- **Independent Issue** → record in the project's canonical tracker with symptom/evidence/impact, then triage separately.
+## Deliver
 
-If a Blocker exposes a durable underlying defect, keep the immediate Blocker and create/link an Issue in the canonical tracker for the durable defect.
+Implement → focused checks → repair in scope → affected regression → final diff/readback. Keep executing until required human/independent/platform/production gate, a real blocker, or task completion. Do not ask for “continue” after predictable substeps.
 
-## Parallel-session conflict check
+Update the canonical candidate and current handoff entry using read-before-write. Record accurate check coverage and candidate refs. If a task promises a package, supply the complete usable artifact, not just a patch summary.
 
-Before substantial shared writes when multiple sessions/agents may be active:
+Keep engineering result and synchronization result separate. Retry pending record updates after re-reading their destinations; never repeat an already confirmed deployment merely to clear a sync flag.
 
-1. Identify this session's valid Pin/key and bound Node.
-2. Check the live Registry if the project uses one; verify claimant/ownership evidence rather than trusting a copied prompt or stale row.
-3. Compare active write scopes. Overlap means serialize unless there is real physical isolation.
-4. For central/shared files, read immediately before writing and use the narrowest patch possible. Context mismatch means re-read and merge; never replace from a stale whole-file snapshot.
-5. If ownership or claimant identity cannot be proven, enter `OWNERSHIP_UNCERTAIN`: inspect/read is allowed, shared/candidate writes are not.
-6. A Project Primary Focus change is a project-level coordination signal, not a command to reroute a still-valid Session Pin.
+Optional helper: `python scripts/workbench.py deliver packet.json` detects missing required check results, changed candidate refs, invalid declared review independence, source/deployment mismatch and unconfirmed synchronization. It emits `ATTENTION_NEEDED` or `CHECKS_CLEAR`, never project PASS.
 
-## Implement a bounded change
+## Integrate
 
-1. Read the continuity contract, canonical GitHub Issue/PR when relevant, and project coding instructions.
-2. Inspect repo/status/diff/current code.
-3. Make the smallest coherent change inside Owned Scope.
-4. Run focused checks, repair in-scope failures, rerun, then run useful regression checks.
-5. Inspect final diff/status.
-6. Update the GitHub PR/candidate evidence when GitHub is canonical, or the local Candidate Change Packet when local fallback is canonical.
-7. Continue to the required review/verification gate without pausing between those routine steps.
-8. Do not mark the Node PASS if independent review/verification is still required.
+Read current target and candidate heads plus dependencies. Verify contract compatibility and required review/platform rules. Test the exact combination, then merge/deploy only through authorized routes. Inspect automation before merging. Read back the result and preserve one resumable next action.
 
-## GitHub-backed substantial change
+Optional helper: `python scripts/workbench.py integrate packet.json` additionally compares supplied tested/current integration refs and dependency evidence. It does not perform a merge, decide product acceptance, or claim that GitHub CI ran.
 
-Use this flow when the repository and change warrant formal GitHub tracking:
+## Classify friction
 
-`Issue → branch/worktree → implementation/tests → PR → required checks/review → merge → release verification`
+Keep an in-scope finding in this task. Keep a temporary outage/wait as a blocker. Put an independent durable requirement in the canonical tracker. Do not make an external outage a project defect without evidence, and do not broaden the task simply because an adjacent issue is visible.
 
-- Link Issue/PR/commit identifiers from the Work Node; do not duplicate full GitHub bodies locally.
-- Keep Session Pin, ownership, live deployment state, blockers, and protected invariants in Project Continuity.
-- Small low-risk changes may skip Issue and/or PR when repository policy and user intent allow it.
+## Handoff and closure
 
-## Independent review
+Release/transfer only owned scope and record any unknown side effects. A receiver re-reads actual state before accepting. Write a compact outcome/evidence/next-action record; archive completed detail outside the default recovery path.
 
-1. Start from the current Work Node contract and canonical candidate (for example the current PR), not the implementer's summary.
-2. Inspect the actual current diff/artifact and workspace hygiene.
-3. Reproduce relevant checks/findings independently.
-4. Check scope, protected invariants, regressions, and the exact reviewer contract.
-5. Return the contract's verdict vocabulary with evidence by severity.
-6. Do not modify the candidate or accepted state during a read-only review.
-
-## Verify a gate
-
-Use a separate verifier context when independence matters. Verify concrete postconditions such as exact revision, clean tree, required test/CI status, listener/process ownership, staging cleanup, release pointer, rollback, and production invariants. Return PASS/FAIL/BLOCKED only after the required observable checks ran.
-
-## High-impact decision / RFC-ADR
-
-Before implementing a hard-to-reverse architecture, security boundary, permission, persistence, migration, protocol/API, deployment, or major dependency decision, consider a lightweight RFC/ADR:
-
-`Context/Problem → Constraints → Options → Trade-offs → Decision → Consequences → Verification`.
-
-Do not create RFC/ADR overhead for routine fixes or obvious low-risk choices.
-
-## Multi-agent orchestration
-
-Prefer bounded stages instead of one giant prompt:
-
-`Implementer → Primary readback → Independent Reviewer/Verifier → Primary acceptance`.
-
-When delegating to Codex/Antigravity/another agent, provide a compact task contract containing:
-
-- Objective
-- Owned Scope
-- Out of Scope
-- Protected Invariants
-- Acceptance Criteria / Required Checks
-- Source pointers / GitHub Issue or PR when canonical
-- Allowed write/read behavior
-- Expected completion packet/verdict
-
-Require the receiver to inspect current files/repo rather than depend on the delegator's summary. Separate role/context is more important for review independence than merely changing permissions.
-
-## Pause / handoff
-
-A new session appearing does not transfer ownership. For full handoff, the old owner explicitly releases/transfers the relevant scope and the receiving session re-reads current state and accepts it; otherwise the new session is only a peer/helper/reviewer with its bounded scope.
-
-Before ending a meaningful session:
-
-- update current Node status and next action
-- record compact Worker/Reviewer/Verifier evidence
-- link current GitHub Issue/PR/commit when relevant
-- update Handoff Card if current state changed
-- record new requirements/invariants/issues only if actually established
-- avoid copying full logs/prompts/GitHub discussions
-
-A clean handoff should let a fresh agent safely start the next step without re-reading the entire conversation.
-
-## Close a Work Node
-
-Close only after all required acceptance gates pass and Primary acceptance is established. Write Closure Memory with accepted outcome, durable capabilities, inherited requirements, invariants, verification evidence, remaining risks, canonical tracker references, and what future agents may/may not assume. Then move the Project Spine to the next actual Node.
+When the required gate is reached, stop. A worker claim, helper result, package validation, technical review, Primary acceptance, merge and deployment remain different statements.

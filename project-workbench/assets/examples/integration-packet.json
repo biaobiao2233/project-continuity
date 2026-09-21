@@ -1,0 +1,83 @@
+{
+  "schema_version": 1,
+  "project_ref": "example/project",
+  "task_ref": "example/project#17",
+  "lane": "runtime",
+  "execution": {
+    "id": "run-new",
+    "ownership": "confirmed",
+    "mutation_requested": true,
+    "authorization_ref": "fixture:current-user-scope"
+  },
+  "source": {
+    "candidate_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "evidence_ref": "fixture:source-readback",
+    "observed_at": "2026-09-21T06:00:00+00:00"
+  },
+  "resources": [
+    {
+      "kind": "code",
+      "host": "sandbox",
+      "key": "/tmp/task-17",
+      "access": "write"
+    }
+  ],
+  "required_checks": [
+    "unit"
+  ],
+  "checks": [
+    {
+      "name": "unit",
+      "status": "passed",
+      "candidate_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_ref": "fixture:test-log",
+      "environment_ref": "fixture:isolated-python"
+    }
+  ],
+  "review": {
+    "required": true,
+    "status": "passed",
+    "candidate_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+    "reviewer_execution_id": "review-only",
+    "candidate_edited": false,
+    "writer_execution_ids": [
+      "run-new"
+    ],
+    "evidence_ref": "fixture:review"
+  },
+  "platform_approval": {
+    "required": false
+  },
+  "deployment": {
+    "state": "not_attempted"
+  },
+  "sync_targets": [
+    {
+      "id": "canonical-task",
+      "status": "confirmed",
+      "candidate_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_ref": "fixture:task-readback"
+    },
+    {
+      "id": "handoff-entry",
+      "status": "confirmed",
+      "candidate_ref": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+      "evidence_ref": "fixture:entry-readback"
+    }
+  ],
+  "next_action": "Perform the separately authorized receiver pilot.",
+  "integration": {
+    "target_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "tested_target_ref": "bbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbbb",
+    "candidate_refs": [
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ],
+    "tested_candidate_refs": [
+      "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa"
+    ],
+    "result_ref": "cccccccccccccccccccccccccccccccccccccccc",
+    "status": "passed",
+    "evidence_ref": "fixture:combined-tests",
+    "environment_ref": "fixture:integration-tree"
+  }
+}

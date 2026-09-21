@@ -33,23 +33,28 @@ Project Continuity 的路线图按**真实使用摩擦**推进，不以“版本
 
 不做：为了自动化而自动化，不新增第二套 accepted-state database。
 
-## v2 — Optional helper / CLI / MCP
+## v2 — Project Workbench team workflow + read-only checker（2.0.0-rc.1）
 
-仅当“手工维护漂移”在多个真实项目里重复出现时启动。
+当前候选已实现：
 
-候选能力：
+- 长期方向 / 短任务 / 可替换执行身份；
+- GitHub-first task / dependency / PR 记录，不再默认复制本地 Issue；
+- versioned interface contract + early integration；
+- source workspace / runtime resource / live target 三层冲突检查；
+- candidate-bound review / integration / deployment evidence；
+- `RECORD_SYNC_PENDING` 可恢复记账边界；
+- 标准库只读 helper：`resume / preflight / deliver / integrate`；
+- tests / eval scenarios / synthetic Git worktree integration pilot。
 
-- `continuity init`
-- `continuity status`
-- `continuity validate`
-- `continuity handoff`
-- `continuity close`
-- stale Handoff / duplicate state / missing review gate diagnostics
-- Project Workbench adapter packaging
-- 可选 project index / locator：在很多 Project Spine 之间只读导航
-- accepted Closure Memory 的显式、选择性 EverOS export helper（不自动写）
+RC 不做：
 
-原则：Markdown 仍是人类可读、可审计的 authority surface；helper 不能暗中建立第二套项目真相。
+- 不常驻 daemon / heartbeat；
+- 不自动抢 ownership；
+- 不直接查询 GitHub 或后台派 Agent；
+- 不 auto-merge / auto-deploy；
+- 不把 checker 的 `CHECKS_CLEAR` 当成项目 PASS。
+
+升 stable 前仍需要 fresh receiver / host discovery-loading dogfood，并继续观察是否真的减少跨会话和多方向协作摩擦。
 
 ## v3 — Runtime context injection / hooks
 

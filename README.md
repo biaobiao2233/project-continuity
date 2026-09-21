@@ -10,9 +10,9 @@ Project Continuity 是一套面向 ChatGPT、Codex、Claude Code、Antigravity�
 
 > **现在要记什么？什么能信？下一个 Agent 怎么继续？**
 
-当前公开基线：**Project Continuity v1.1 Protocol + Project Workbench public parity release v1.1.1**。
+当前公开基线：**Project Continuity v1.1 稳定协议 + Project Workbench `2.0.0-rc.1` 预发布候选**。RC 已通过本地 47 项测试，但 fresh receiver / 平台安装加载仍是独立验收门；详见 [v2.0.0-rc.1 release notes](docs/release-notes-v2.0.0-rc.1.md)。
 
-> 这不是一份只用于介绍想法的概念稿。仓库内 `project-workbench/` 现在按当前实际 dogfood / accepted user-level package 做 public parity；真实项目的私有 Spine、worklogs、聊天和凭据不会被打包公开。详见 [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md)。
+> 这不是一份只用于介绍想法的概念稿。仓库内 `project-workbench/` 现在公开的是 **2.0.0-rc.1 完整候选源码、测试、示例与配套提示词**；它来自本地已验证候选，但不把“打包成功”写成“平台已安装/已验收”。真实项目的私有 Spine、worklogs、聊天和凭据不会被打包公开。详见 [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md)。
 
 ## 为什么需要它
 
@@ -48,20 +48,23 @@ Project Spine
 
 按**工作生命周期**拆 Work Node，不按日期、聊天次数或 Prompt 数量拆账本。已完成 Node 生成 Closure Memory，详细过程退出正常恢复路径。
 
-### Authority / Provenance 分层
+### 授权、当前观测与验收分开
 
-默认可信顺序：
+不要再把三种不同问题塞进一条“可信度排序”：
+
+- **允许做什么**：看当前用户授权、任务 scope、权限与仓库策略；
+- **现在实际是什么**：看当前 repo / files / tests / process / endpoint / live observations；
+- **哪一版曾经通过验收**：看绑定到准确 source/artifact、环境和 required evidence 的验收记录。
+
+因此遇到漂移时应表达为：
 
 ```text
-当前用户明确意图 / 授权
-  > 独立验证后接受的项目状态
-  > repo / files / live reproducible evidence
-  > Worker Claim
-  > Agent summary / inference
-  > derived historical memory
+A was accepted
+B is running now
+B has not been accepted yet
 ```
 
-因此：
+而不是让历史 PASS 覆盖当前运行事实，也不是让当前运行版本自动继承旧 PASS。
 
 ```text
 Worker COMPLETE != PASS
@@ -93,15 +96,16 @@ Closure Memory 适合“已经结束的阶段”；Current Resume Point 适合�
 不是所有任务都要 Issue、Milestone、Reviewer 和 RFC。高风险或长期工程可以使用：
 
 ```text
-Issue
-→ Triage / Milestone
-→ Work Node
-→ Candidate Change Packet
-→ Required Review Gate
-→ PASS / REPAIR_FIRST / FAIL
+GitHub Issue / task
+→ short-lived branch / worktree
+→ implementation + focused checks
+→ PR / candidate-bound review
+→ early integration
 → Merge
 → Staging / Release Gate
-→ Closure Memory
+→ compact handoff / Closure Memory
+
+Work Node 只在执行连续性真的有帮助时补充，不复制完整 GitHub Issue
 ```
 
 简单修改就保持简单；持续项目也只使用达到正确性与可恢复性所需的最小治理层级。
@@ -233,14 +237,19 @@ Project Continuity 不是这些项目的 fork，也没有复制它们的源代�
 - 公共示例与多平台安装说明；
 - schema / drift lint，不改变 authority model。
 
-### v2 — Helper / CLI / MCP
+### v2 — Team workflow + read-only checker（当前 RC）
 
-只有手工漂移成为稳定问题才做：
+`2.0.0-rc.1` 已把真实使用中反复出现的摩擦收进候选：
 
-- `init / status / validate / handoff / close` helper；
-- 自动检查重复 state、stale Handoff、missing review gate；
-- Skill adapter 构建与跨平台 core drift 检查；
-- 默认仍以 Markdown 为可审计 Source of Truth。
+- 长期方向（Lane）与短期可交付任务分开；conversation/Agent 是可替换执行者；
+- GitHub Issue / PR / native dependency 作为工程账本，本地只保留 GitHub 不擅长的执行绑定；
+- 先约定 versioned interface contract，再并行实现并尽早集成；
+- 分别检查 source workspace、runtime resource、live target，worktree 不被误当成生产资源锁；
+- review / integration / deployment evidence 绑定准确 candidate 和 environment；
+- `resume / preflight / deliver / integrate` 只读 checker 只检查输入快照，不联网、不自动合并、不部署、不授予权限；
+- record sync 失败时显式保留 `RECORD_SYNC_PENDING`，不为了补账重复部署。
+
+当前 RC 的真实边界：47 项本地测试通过；尚未把 fresh receiver、真实 GitHub hosted workflow 或生产设备当作“已验收”。后续是否升 stable 由实际 receiver dogfood 决定。
 
 ### v3 — Runtime Context Injection / Hooks（实验）
 
