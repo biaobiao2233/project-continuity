@@ -1,6 +1,6 @@
 # Project Workbench v2 candidate
 
-Version: **2.0.0-rc.1**. This is a complete candidate Skill bundle, not a live installation or release acceptance claim.
+Version: **2.0.0-rc.2**. This is a complete candidate Skill bundle, not a live installation or release acceptance claim.
 
 The update turns direction-based collaboration into small, continuously integrated deliveries. It preserves proportional governance, direct connector routing, current-state verification, existing ownership safeguards, EverOS-derived-only boundaries and explicit production authorization.
 
@@ -13,10 +13,11 @@ The update turns direction-based collaboration into small, continuously integrat
 - Bind reviews, integration checks and deployment receipts to exact candidates and environments.
 - Make partial bookkeeping explicit and retryable; use a stable project entry or a timestamped projection instead of a second manually maintained current-state database.
 - Add a read-only, standard-library local checker with `resume`, `preflight`, `deliver`, and `integrate` commands. It only checks supplied snapshots and never contacts GitHub, merges, deploys, grants authority or auto-accepts.
+- Add explicit OpenCode integration guidance: native global `AGENTS.md`, shared `~/.agents/skills` discovery, duplicate-ID precedence, and deterministic `opencode debug skill` verification.
 
 ## Contents
 
-`SKILL.md` is the entrypoint. Existing connector/history reference paths and the original icon are retained. Read specialized references only when needed. The Chinese personalization texts live in `assets/`; the adapter example for explicit-only Codex lives in `assets/adapters/`.
+`SKILL.md` is the entrypoint. Existing connector/history reference paths and the original icon are retained. Read specialized references only when needed. The Chinese personalization texts live in `assets/`; host adapters for explicit-only Codex and OpenCode live in `assets/adapters/`.
 
 ## Usage and verification
 

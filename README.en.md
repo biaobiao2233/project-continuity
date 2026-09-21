@@ -10,9 +10,9 @@ It is not a chat archive or a vector database. It focuses on three questions:
 
 > **What should be remembered now? What should be trusted? How should the next agent continue?**
 
-Current public baseline: **Project Continuity v1.1 stable protocol + Project Workbench `2.0.0-rc.1` pre-release candidate**. The RC passed 47 local tests; fresh-receiver and platform-installation acceptance remain separate gates. See [v2.0.0-rc.1 release notes](docs/release-notes-v2.0.0-rc.1.md).
+Current public baseline: **Project Continuity v1.1 stable protocol + Project Workbench `2.0.0-rc.2` pre-release candidate**. The RC keeps all 47 local tests green and adds real OpenCode 1.18.3 global-rule / Skill-catalog verification; model-level fresh-receiver behavior remains a separate gate. See [v2.0.0-rc.2 release notes](docs/release-notes-v2.0.0-rc.2.md).
 
-The checked-in `project-workbench/` now contains the complete `2.0.0-rc.1` candidate source, tests, examples, and paired personalization text. Local validation does not imply that a host has installed, loaded, or accepted the candidate. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration remain excluded.
+The checked-in `project-workbench/` now contains the complete `2.0.0-rc.2` candidate source, tests, examples, OpenCode integration guidance, and paired personalization text. Catalog discovery or local validation does not imply model-level receiver acceptance. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration remain excluded.
 
 ## Core model
 

@@ -10,9 +10,9 @@ Project Continuity 是一套面向 ChatGPT、Codex、Claude Code、Antigravity�
 
 > **现在要记什么？什么能信？下一个 Agent 怎么继续？**
 
-当前公开基线：**Project Continuity v1.1 稳定协议 + Project Workbench `2.0.0-rc.1` 预发布候选**。RC 已通过本地 47 项测试，但 fresh receiver / 平台安装加载仍是独立验收门；详见 [v2.0.0-rc.1 release notes](docs/release-notes-v2.0.0-rc.1.md)。
+当前公开基线：**Project Continuity v1.1 稳定协议 + Project Workbench `2.0.0-rc.2` 预发布候选**。RC 保持 47 项本地测试全绿，并新增 OpenCode 1.18.3 的全局规则 / Skill catalog 真实验证；fresh receiver 的模型行为仍是独立验收门。详见 [v2.0.0-rc.2 release notes](docs/release-notes-v2.0.0-rc.2.md)。
 
-> 这不是一份只用于介绍想法的概念稿。仓库内 `project-workbench/` 现在公开的是 **2.0.0-rc.1 完整候选源码、测试、示例与配套提示词**；它来自本地已验证候选，但不把“打包成功”写成“平台已安装/已验收”。真实项目的私有 Spine、worklogs、聊天和凭据不会被打包公开。详见 [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md)。
+> 这不是一份只用于介绍想法的概念稿。仓库内 `project-workbench/` 现在公开的是 **2.0.0-rc.2 完整候选源码、测试、示例、OpenCode 适配与配套提示词**；它来自本地已验证候选，但不把“catalog 可见”或“打包成功”写成模型行为已经验收。真实项目的私有 Spine、worklogs、聊天和凭据不会被打包公开。详见 [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md)。
 
 ## 为什么需要它
 
