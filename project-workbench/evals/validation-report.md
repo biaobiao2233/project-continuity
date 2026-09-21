@@ -1,6 +1,6 @@
 # Project Workbench v2 — 候选交付与验证报告
 
-版本：`2.0.0-rc.1`
+版本：`2.0.0-rc.2`
 日期：2026-09-21
 范围：完整 Skill 更新、配套中文个性化提示词、本地只读检查器与隔离测试。
 状态：**本地验证完成的候选包；未覆盖现用安装，不是独立验收或生产发布结论。**
@@ -29,6 +29,8 @@ Git 试验在临时目录初始化全新测试仓库，使用固定接口契约�
 
 四个 CLI 示例实测：
 
+OpenCode 1.18.3 额外做了平台级结构验证：`opencode debug paths` 确认全局配置目录为 `~/.config/opencode`；`opencode debug skill` 真实返回 `project-workbench`，location 指向共享 `~/.agents/skills/project-workbench/SKILL.md`；OpenCode 全局 `AGENTS.md` 的 v2 关键规则回读通过。一次 fresh `opencode run` 模型级 receiver 探针在 120 秒超时，因此不把模型实际响应/自动调用写成已验收。
+
 | 动作 | 实际输出 | 退出码 |
 |---|---|---:|
 | resume | SNAPSHOT_ONLY | 0 |
@@ -48,7 +50,7 @@ Git 试验在临时目录初始化全新测试仓库，使用固定接口契约�
 
 ## 尚未发生的动作
 
-未做 fresh AI receiver 行为验收；未运行真实 GitHub PR/CI/merge queue；未发布 GitHub 更新；未覆盖用户已接受的 Codex/ChatGPT 安装；未修改 ChatGPT 个性化设置；未更改 Athena 现网。
+未完成 fresh AI receiver 的模型行为验收；OpenCode 只完成 catalog/config 结构验证，模型级 `opencode run` 探针超时。未运行真实 GitHub-hosted CI/merge queue；未修改 ChatGPT 个性化设置；未更改 Athena 现网。
 
 ChatGPT 适配元数据保留现用的隐式调用策略；Codex 显式调用适配样例单独提供。不得把复制文件或打包成功当成平台已发现、加载或已应用设置。
 

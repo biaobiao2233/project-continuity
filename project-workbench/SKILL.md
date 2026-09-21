@@ -77,6 +77,7 @@ Make independent work converge into verified deliveries. Keep directions durable
 | Recover → preflight → deliver → integrate workflows | [workflows.md](references/workflows.md) |
 | Optional read-only packet checker and exact CLI contract | [local-checks.md](references/local-checks.md) |
 | Windows/local targets | [coding-tools-mcp.md](references/coding-tools-mcp.md) |
+| OpenCode global instructions and Skill discovery | [opencode.md](references/opencode.md) |
 | SG/HK/US/KR server targets | [server-connectors.md](references/server-connectors.md) |
 | Missing historical context | [everos.md](references/everos.md) |
 | Platform fact sources and capability caveats | [sources.md](references/sources.md) |
