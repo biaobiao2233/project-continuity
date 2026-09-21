@@ -10,9 +10,9 @@ It is not a chat archive or a vector database. It focuses on three questions:
 
 > **What should be remembered now? What should be trusted? How should the next agent continue?**
 
-Current public baseline: **Project Continuity v1.1 Protocol + Project Workbench public parity release v1.1.1**.
+Current public baseline: **Project Continuity v1.1 stable protocol + Project Workbench `2.0.0-rc.1` pre-release candidate**. The RC passed 47 local tests; fresh-receiver and platform-installation acceptance remain separate gates. See [v2.0.0-rc.1 release notes](docs/release-notes-v2.0.0-rc.1.md).
 
-The checked-in `project-workbench/` is intended to track the accepted user-level package used for real dogfood rather than remain a simplified public-only variant. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration are deliberately excluded.
+The checked-in `project-workbench/` now contains the complete `2.0.0-rc.1` candidate source, tests, examples, and paired personalization text. Local validation does not imply that a host has installed, loaded, or accepted the candidate. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration remain excluded.
 
 ## Core model
 
@@ -35,7 +35,7 @@ The acceptance test is intentionally simple:
 
 - **Lifecycle over chronology** — create Work Nodes around independently closable work, not around dates or chats.
 - **Closure over replay** — closed work leaves compact Closure Memory instead of staying in the default active context.
-- **Authority separation** — User Evidence, Worker Claim, Independent Evidence and Accepted Memory are not interchangeable.
+- **Authority / observation / acceptance separation** — permission comes from current authorization and scope; current state comes from live/repository evidence; acceptance stays bound to the exact candidate and environment that were actually reviewed.
 - **In-flight resume state** — Current Resume Point records the physical boundary of unfinished work.
 - **Fail-closed multi-session coordination** — ambiguous ownership becomes `OWNERSHIP_UNCERTAIN`; shared/candidate writes become read-only.
 - **Proportional governance** — formal review gates are used when the task or node contract needs them, not for every tiny edit.
@@ -76,7 +76,7 @@ See [docs/PRIOR_ART.md](docs/PRIOR_ART.md) for the exact boundaries.
 ## Roadmap
 
 - **v1.x:** improve Markdown ergonomics, examples, and drift validation.
-- **v2:** optional CLI/MCP helpers only if manual drift becomes a repeated problem.
+- **v2 RC:** durable directions + short delivery tasks, contract-first parallel work, early integration, three-layer resource isolation, candidate-bound evidence, and a read-only `resume/preflight/deliver/integrate` snapshot checker.
 - **v3:** experimental runtime context injection / hooks, with a long-term goal of **automatic project context feed**: a host/runtime adapter materializes the current Project Spine / Active Work Node / Handoff / invariants before the model decides whether to call a Skill or read files. Codex is the first target, with reusable adapters for other agents and technically supported Web clients.
 - **v4:** optional local context proxy and request-time compression research.
 

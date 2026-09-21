@@ -1,105 +1,47 @@
-# Project Workbench Skill
+# Project Workbench v2 candidate
 
-This directory is the reusable workflow layer for Project Continuity and is intended to stay in **public parity** with the accepted user-level package used for real dogfood.
+Version: **2.0.0-rc.1**. This is a complete candidate Skill bundle, not a live installation or release acceptance claim.
 
-It includes:
+The update turns direction-based collaboration into small, continuously integrated deliveries. It preserves proportional governance, direct connector routing, current-state verification, existing ownership safeguards, EverOS-derived-only boundaries and explicit production authorization.
 
-- Project Continuity / ownership / acceptance semantics;
-- GitHub-first issue and pull request governance with local fallback;
-- proportional task governance so small work stays small;
-- local-machine connector routing;
-- direct server WebCodex connector routing;
-- EverOS-Tunnel historical-memory routing;
-- continuous execution so deterministic in-scope workflows do not stop after every substep;
-- implementation / review / verification / handoff workflows;
-- the current OpenAI adapter and icon.
+## What changed
 
-## Invocation policy
+- Separate authorization, current observations and version-bound acceptance rather than treating them as one priority stack.
+- Keep directions long-lived, tasks/branches short-lived and execution identity replaceable. Do not duplicate GitHub tasks into compulsory Work Nodes.
+- Check code, runtime and production-resource isolation independently.
+- Prefer interface contracts and early integration over a late departmental merge.
+- Bind reviews, integration checks and deployment receipts to exact candidates and environments.
+- Make partial bookkeeping explicit and retryable; use a stable project entry or a timestamped projection instead of a second manually maintained current-state database.
+- Add a read-only, standard-library local checker with `resume`, `preflight`, `deliver`, and `integrate` commands. It only checks supplied snapshots and never contacts GitHub, merges, deploys, grants authority or auto-accepts.
 
-The checked-in ChatGPT/OpenAI adapter uses:
+## Contents
 
-```yaml
-policy:
-  allow_implicit_invocation: true
+`SKILL.md` is the entrypoint. Existing connector/history reference paths and the original icon are retained. Read specialized references only when needed. The Chinese personalization texts live in `assets/`; the adapter example for explicit-only Codex lives in `assets/adapters/`.
+
+## Usage and verification
+
+Use the existing host installation mechanism for the complete `skill.zip`. Keep the previous installation until the intended receiver pilot succeeds. Do not silently change activation policy or global instructions. See [rollout](references/rollout.md).
+
+The current ChatGPT adapter retains narrow implicit invocation. A Codex installation with an accepted explicit-only policy must use the provided explicit-only adapter, not the ChatGPT setting. Other host-specific policies must be rechecked before installation.
+
+Run optional local tests with Python 3.10+ and Git installed:
+
+```sh
+PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
+python scripts/workbench.py resume assets/examples/packet.json
+python scripts/workbench.py preflight assets/examples/packet.json --peers assets/examples/peers.json
 ```
 
-The description is intentionally narrow: auto-discovery is for ongoing/resumable project work, handoff, continuity, governance, live-state work, or multi-agent coordination. Ordinary chat, isolated code questions, one-off low-risk edits, and isolated reviews that do not need continuity/governance are explicitly excluded. Explicit invocation still works when the user wants to force the workflow.
+Examples contain synthetic references, not observed user-project state. The example task is intentionally unfinished; `deliver` must report attention until evidence is supplied. The test suite includes temporary Git worktree integration, but not a live GitHub workflow, real AI receiver evaluation or router deployment.
 
-Other platforms may use different adapter policies. Codex and Claude Code guidance remains explicit by default unless their own adapter is deliberately changed.
+Use [local-checks](references/local-checks.md) for the exact packet contract and tool limits, [scenarios](evals/scenarios.md) for receiver acceptance, and [sources](references/sources.md) for checked upstream behavior.
 
-## Proportional governance
+## Local validation result
 
-Use the smallest process that preserves correctness:
+See [validation report](evals/validation-report.md): 47 local tests passed, including one synthetic Git worktree integration pilot. Four CLI smoke checks returned the expected outcomes. No real AI receiver, GitHub-hosted workflow, router deployment or installed-skill activation was performed.
 
-```text
-L0  ordinary chat / simple question
-    → answer directly
+## Scope boundaries
 
-L1  one-off low-risk edit
-    → inspect → edit → verify → finish
+Do not add a daemon, heartbeat, auto-takeover, universal lock server, public tunnel, auto-merge or background agent dispatcher just to use this Skill. Prefer existing runtime and GitHub capabilities. Do not require a packet or Python for simple work.
 
-L2  resumable / multi-file project work
-    → minimum useful continuity, usually a Work Node + focused checks
-
-L3  multi-agent / production / security / migration / architecture
-    → explicit ownership + canonical tracker + required gates/review
-```
-
-Do not create Issue/PR/Work Node/review ceremony merely to demonstrate that the workflow was used.
-
-## Governance model
-
-For substantial work in GitHub-backed projects:
-
-```text
-GitHub Issue → branch/worktree → Work Node execution → PR → checks/review → merge
-```
-
-GitHub is the durable development ledger. Project Workbench keeps coordination/runtime facts GitHub does not own:
-
-- Work Nodes
-- Session Pins
-- write ownership
-- protected invariants
-- blockers/next action
-- live/deployment evidence
-- handoff/Closure Memory
-
-Do not maintain a duplicate local Issue register when GitHub is canonical. For local-only projects or projects without a suitable repository, local fallback tracking remains available. Trivial low-risk edits need not be forced through Issue/PR ceremony.
-
-## Execution behavior
-
-Once objective, scope, authorization, and next action are clear, continue through safe deterministic steps to the next real gate rather than asking the user to reply `继续` after each step. Pause only for missing input, new authorization, ownership ambiguity, meaningful scope/risk change, or an actual blocker without a safe fallback.
-
-Tools, MCPs, Skills, and governance structures are means, not the objective. Choose the shortest safe evidence/tool path that satisfies the user goal. Once the goal or acceptance gate is met, stop instead of expanding into optional optimization.
-
-## Connector routing
-
-Current user deployment examples, when available:
-
-- `EverOS-Tunnel` → historical/semantic memory.
-- `WebCodex-SG` / `WebCodex-HK` / `WebCodex-US` / `WebCodex-KR` → direct server operations.
-- `WebCodex-PC` → Windows/local-machine operations.
-- GitHub connector → canonical GitHub Issues/PRs/commits/CI.
-
-Always discover actual current availability instead of assuming these bindings exist in every session.
-
-## Codex
-
-Invoke explicitly with `$project-workbench` unless the Codex adapter is deliberately configured otherwise.
-
-## ChatGPT
-
-Package this directory as a Skill. Matching ongoing project-continuity requests may invoke it implicitly; users can still invoke it explicitly.
-
-## Claude Code
-
-Copy `SKILL.md` + `references/` to the Claude user Skill directory and add:
-
-```yaml
-disable-model-invocation: true
-```
-
-to the `SKILL.md` frontmatter. Invoke explicitly with `/project-workbench`.
-
-Platform adapters may differ. Keep the workflow body, authority model, connector routing, EverOS boundary, and safety semantics aligned.
+The candidate keeps one entrypoint. Installation, fresh-receiver acceptance, account settings and GitHub publication are separately observable steps; packaging alone establishes none of them.

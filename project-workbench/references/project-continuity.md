@@ -1,196 +1,51 @@
-# Project Continuity and Governance
+# Minimal continuity and evidence
 
-## Contents
+## Three independent questions
 
-- [Authority model](#authority-model)
-- [Receiver/read order](#receiverread-order)
-- [Multi-conversation coordination](#multi-conversation-coordination)
-- [State semantics](#state-semantics)
-- [Work Node discipline](#work-node-discipline)
-- [Choose the canonical tracker](#choose-the-canonical-tracker)
-- [Issue / Blocker classification](#issue--blocker-classification)
-- [GitHub-first lifecycle](#github-first-lifecycle)
-- [Local fallback lifecycle](#local-fallback-lifecycle)
-- [Candidate / Required Review Gate](#candidate--required-review-gate)
-- [RFC / ADR discipline](#rfc--adr-discipline)
-- [Continuity writes](#continuity-writes)
+**Authorization:** what may this execution do, to which scope and target, under which user/repository policy?
 
-## Authority model
+**Observation:** which source/artifact/config/process is actually present now, with what evidence and timestamp?
 
-Use this order when evidence conflicts:
+**Acceptance:** which exact candidate and environment passed which required checks and received which decision?
 
-1. Current explicit user intent and authorization.
-2. Independently verified Accepted Project State.
-3. Current repository/files/live reproducible evidence.
-4. Worker Claim / executor report.
-5. Agent summary or inference.
-6. EverOS-derived clue/index memory.
+Never rank an old accepted record above contrary current observations as if acceptance could change physical reality. Never let a current deployment retroactively accept its source. Preserve all three and report drift.
 
-Never upgrade a lower layer into a higher layer without verification.
+## Bounded recovery
 
-## Receiver/read order
+Read the stable project entry → pinned task/PR → current source and required environment → needed evidence/next action. Consult predecessor closure and EverOS only for a specific missing fact. Do not read entire historical worklogs as a default startup cost.
 
-For project continuation or handoff:
+Current explicit task/switch outranks a continuing pin; a project-level focus change alone does not. A fresh unpinned execution follows current project focus only after checking the actual task state.
 
-1. Read the Project Spine / Handoff Card.
-2. Identify the actual Active Work Node and accepted predecessors.
-3. Read current requirements and Protected Invariants needed for the task.
-4. Read the Active Work Node contract: Objective, Owned Scope, Out of Scope, Acceptance Criteria, blockers, next action.
-5. Resolve any linked canonical tracker item (for example GitHub Issue/PR) when it materially affects the task.
-6. Read only relevant predecessor Closure Memory or Requirement Anchors.
-7. Inspect repo/docs/live state needed to execute or verify the current step.
-8. Use EverOS only when the continuity layer and source records do not contain enough history.
+## Execution identity and takeover
 
-Do not default to re-reading entire historical worklogs, old chats, or duplicated Issue bodies.
+Use a new execution ID for a new conversation. Reuse runtime-provided session mechanisms rather than creating another runner/inbox system. Record a minimal logical ID only when needed; private ChatGPT thread IDs are not required.
 
-## Multi-conversation coordination
+A task, direction, branch or path is not a claimant identity. A copied ID, inactivity, timeout, disconnected connector or old handoff is not proof of release.
 
-When the project has concurrent or resumable sessions, keep project-level focus, session-local routing, and write ownership separate.
+Normal takeover: old owner explicitly releases/transfers the scope → receiver re-reads current task/source/resources → receiver acknowledges the new bounded ownership using a new execution identity. Preserve predecessor identity in history.
 
-Use this recovery/routing order:
+If the owner cannot respond, only a currently authorized user/coordinator may reassign the scope. First confirm/fence the old write path using actual runtime controls or real isolated resources. Do not invent leases, automatic timeout takeovers or fencing tokens the backend cannot enforce. An ownership flag written into JSON is not a lock.
 
-1. Current explicit user task or explicit switch.
-2. Existing valid Session Pin for this continuing interaction.
-3. The bound Work Node's current state and ownership.
-4. Project Primary Focus and the single live Parallel Active Work Registry, if the project uses one.
-5. Only a fresh/unpinned session defaults to project-level focus.
+When claimant or shared ownership is uncertain, keep shared/candidate writes read-only. Continue isolated read-only investigation where safe. A clean new sandbox does not grant production authority.
 
-A valid Session Pin is not overwritten merely because another session changed Project Primary Focus. Session Pin, Work Node status, GitHub Issue/PR state, and Accepted State remain distinct.
+## Shared records
 
-For logical Session Keys:
+Keep one chosen live coordination source. Central fields have one writer or explicit non-overlapping delegation. Before audit-relevant non-owner central writes, persist grantor, grantee, exact fields, purpose, and expiry/return condition; temporary delegation is not ownership transfer.
 
-- Treat the key as coordination identity, not cryptographic or platform identity.
-- Use single allocation / no silent reuse. A fresh/cold physical conversation should receive a new key unless claimant continuity for the old key is actually established.
-- Old prompts, self-claiming a key, or seeing an existing Registry row do not prove claimant identity.
-- Duplicate or ambiguous claimants put that key/scope into `OWNERSHIP_UNCERTAIN`; shared/candidate writes fail closed to read-only.
-- Full takeover uses explicit release/transfer plus receiver re-read/accept; do not infer takeover from Last sync, recent activity, Primary Focus, or silence.
+Read immediately before a narrow SHA/context-guarded write. On drift, re-read and reconcile; do not weaken match guards or overwrite from an old snapshot. Preserve unrelated uncommitted changes and pending jobs.
 
-For writes:
+## Handoff contents
 
-- Registry is a coordination view, not a lifecycle/acceptance source of truth. Keep one live Registry only when parallel work actually needs it.
-- Declare minimal write scope. Overlapping active write scopes serialize unless physically isolated, typically by branch/worktree/sandbox.
-- Central shared surfaces are coordinator/single-writer by default. Use read-before-write + narrow patch; if patch context changed, re-read and merge instead of overwriting from a stale snapshot.
-- Temporary non-owner writes to coordinator-owned central fields require a bounded delegation persisted before the write when auditability matters. Record the delegated writer, exact fields/scope, purpose, and expiry/return condition; ad hoc shared writes do not transfer ownership.
-- Reviewer/Verifier stays candidate read-only unless explicitly changing role; editing the candidate ends that independent-review round.
+Reference the canonical task/PR, exact candidate, current executor/transfer, required checks and their evidence, relevant environment/rollback, unresolved blockers, pending synchronization, and next action. Keep the full requirements in the canonical task.
 
-Do not introduce heartbeat, daemon, lock server, automatic cross-chat messaging, or a dependency on private ChatGPT thread IDs merely to implement this protocol.
+Use the repository for architecture, interfaces and durable invariants. Use an existing runtime/session ledger for execution coordination where possible. Treat any locally generated dashboard as a timestamped projection, never a second authoritative registry.
 
-## State semantics
+Prefer README as a stable entry/index; when a project already relies on a current-state card, update that single entry at delivery or report the pending sync. Merely adding a worklog is not a reason to claim the entry is current.
 
-Keep these states distinct:
+## Partial completion
 
-- `NOT_STARTED`
-- `IN_PROGRESS`
-- `CANDIDATE`
-- `PASS`
-- `FAIL`
-- `BLOCKED`
-- `SUPERSEDED`
+Distinguish NOT_ATTEMPTED, UNKNOWN outcome, observed success/failure, and pending record sync at the relevant step; do not create a new universal task-state taxonomy. Reconcile unknown operations by readback before retry. If source/deployment succeeded but record sync failed, keep both truths and retry only the unconfirmed synchronization.
 
-`Worker COMPLETE` does not mean project PASS. A typical acceptance path is:
+Record acceptance only for the exact candidate/environment and required decisions. Preserve worker claim, reviewer evidence and Primary acceptance separately; do not turn an optional local checker result into project PASS.
 
-`Worker Claim → required evidence/review → Primary acceptance → PASS`.
-
-If a previously accepted conclusion is invalidated, mark it `SUPERSEDED` with a reason and replacement; do not silently rewrite history.
-
-## Work Node discipline
-
-A Work Node is a bounded unit of implementation/review/verification, not a date, chat, prompt, GitHub Issue, PR, or file.
-
-Before acting, preserve:
-
-- Objective
-- Owned Scope
-- Out of Scope
-- Acceptance Criteria
-- Protected Invariants
-- Dependencies
-- Current blocker/next action
-- Canonical tracker links when relevant
-
-Do not enlarge Owned Scope because a reviewer or implementer notices adjacent work.
-
-## Choose the canonical tracker
-
-Do not maintain two durable Issue systems for the same project.
-
-- **Writable GitHub repository available and used for development** → GitHub is the default durable tracker for substantial bugs/features and PR candidates.
-- **No suitable GitHub repository / intentionally local-only project / explicit local preference** → local Issue register is the fallback durable tracker.
-- **Small bounded low-risk edit** → may need neither a durable Issue nor a formal Work Node if continuity/risk does not justify it.
-
-Project Continuity still owns execution coordination even when GitHub is canonical: Work Nodes, Session Pins, write ownership, protected invariants, blockers, live/deployment evidence, and next action.
-
-When GitHub is canonical, store only compact references such as `Issue #42`, `PR #57`, branch/commit, acceptance state, and live rollout state. Do not copy the full Issue/PR discussion into local continuity.
-
-## Issue / Blocker classification
-
-When a new problem or requirement appears, classify it before acting:
-
-- **Current-task finding**: already inside the Active Work Node acceptance scope. Keep it in that Node's implementation/review/repair cycle; do not duplicate it as a new Issue.
-- **Blocker**: a transient wait, one-off timeout, normal dependency, unavailable external service, or one-time user interaction that prevents the current next step. Record it on the current Node; do not automatically create a durable Issue.
-- **Independent Issue**: a durable problem/requirement that is out of scope, needs later work, needs a separate decision/verification, or should survive after the current Node closes. Record it in the project's canonical tracker and triage it later.
-
-If a transient Blocker reveals a durable underlying defect, create/link an Independent Issue in the canonical tracker while keeping the immediate Blocker on the current Node.
-
-## GitHub-first lifecycle
-
-For a substantial change in a GitHub-backed project, prefer the repository's real development lifecycle:
-
-`GitHub Issue → branch/worktree → Work Node execution → Pull Request → required checks/review → merge → staging/release gate → release/promotion`.
-
-Key rules:
-
-- An Issue records a durable problem/request, not current execution ownership.
-- A Work Node executes or verifies bounded scope and may link one or more Issues/PRs.
-- A PR is a candidate/review surface, not proof of PASS or production release.
-- Automated tests do not replace independent review when independent review is required; independent review does not replace required tests/live verification.
-- `Merged Source != Staging Accepted != Production Released`.
-- Do not create a local mirror Issue merely to imitate GitHub.
-- Do not add Project Boards, complex labels, bots, CODEOWNERS, or workflow automation unless repeated real usage justifies them.
-
-## Local fallback lifecycle
-
-When GitHub is not the canonical tracker, use the lightweight local lifecycle only when the work benefits from durable tracking:
-
-`Local Issue → Work Node → Candidate → required review/verification → PASS/REPAIR_FIRST/FAIL → release gate if applicable`.
-
-Use the project's existing Issue ID convention if one exists; do not invent global IDs. Keep this fallback lightweight and migrate to the repository tracker rather than maintaining duplicate ledgers if the project later adopts GitHub as canonical.
-
-## Candidate / Required Review Gate
-
-For a formal candidate, capture only what reviewers need:
-
-- candidate revision / branch / PR / commit
-- linked canonical Issues
-- Objective and Owned Scope
-- changed files/artifacts
-- acceptance criteria addressed
-- automated checks and results
-- known risks/unresolved questions
-- rollback/recovery when relevant
-- source/staging/production boundary
-- Worker Claim
-- independent review status when required
-- merge/release readiness
-
-After a substantive repair, update the candidate revision/evidence. Do not imply an older review still covers a changed candidate.
-
-For important/high-risk nodes, define required checks such as focused/regression tests, lint/compile, security/adversarial review, scope/diff check, live-state verification, independent reviewer verdict, cleanup/rollback verification, and Primary acceptance. Required checks must run before PASS.
-
-## RFC / ADR discipline
-
-For high-impact or hard-to-reverse decisions—architecture, security boundary, permission model, persistence/data model, migrations, protocol/public API, deployment topology, or major dependency choices—consider a lightweight RFC/ADR before implementation.
-
-Capture at least: Context/Problem, Constraints, Options, Trade-offs, Decision, Consequences, and follow-up verification.
-
-Do not create RFC/ADR documents for routine bug fixes or obvious low-risk implementation choices.
-
-## Continuity writes
-
-Write only high-signal accepted/current material:
-
-- Handoff Card: current goal/state/next action/blockers/invariants.
-- Execution Record: executor, purpose, scope, worker claim, changed artifacts, verification, verdict, next action, canonical Issue/PR links when relevant.
-- Closure Memory: accepted outcome, durable capabilities, inherited requirements, invariants, evidence, risks, what future agents may/may not assume.
-
-Do not paste full prompts, giant logs, diffs, code, external docs, GitHub discussions, or secrets into Project Continuity.
+Mark obsolete accepted conclusions SUPERSEDED with a reason and replacement pointer instead of rewriting their historical content.

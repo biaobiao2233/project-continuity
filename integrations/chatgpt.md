@@ -1,5 +1,7 @@
 # ChatGPT
 
+> Project Workbench `2.0.0-rc.1` 是预发布候选：本地测试通过不等于当前 ChatGPT 账号已经安装、发现或接受该 Skill。
+
 ## Project Workbench
 
 ChatGPT Skill 可以使用仓库里的 `project-workbench/` 作为 canonical core。
@@ -11,7 +13,7 @@ ChatGPT Skill 可以使用仓库里的 `project-workbench/` 作为 canonical cor
 ```yaml
 interface:
   display_name: "Project Workbench"
-  short_description: "GitHub-first continuity for ongoing projects and handoffs"
+  short_description: "Independent directions, continuous integration, verified handoffs"
   icon_small: "./assets/icon.svg"
   icon_large: "./assets/icon.svg"
 policy:
@@ -24,11 +26,13 @@ policy:
 
 平台中立模板见 `prompts/global-guidance.zh-CN.md`。
 
-当前 dogfood 的可直接粘贴 ChatGPT 用户级绑定见：
+当前 v2 RC 的可直接粘贴 ChatGPT 用户级绑定见：
 
-- `prompts/chatgpt-custom-instructions.zh-CN.md`
+- `prompts/chatgpt-custom-instructions.zh-CN.md`：仓库级完整版本；
+- `project-workbench/assets/personalization-v2.txt`：Skill 内完整副本；
+- `project-workbench/assets/personalization-v2-compact.txt`：字符受限场景的短版。
 
-它只保存长期稳定行为原则和当前 connector routing；详细执行 SOP 继续由 Project Workbench Skill 负责。不要把项目 current state 写进账号级提示词。
+完整/短版二选一，不要叠加。账号级提示词只保存长期行为原则和 connector routing；详细项目 SOP 继续由 Project Workbench Skill 负责，不要把项目 current state 写进账号级提示词。
 
 ## Handoff
 

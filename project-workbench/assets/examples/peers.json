@@ -1,0 +1,22 @@
+{
+  "complete": true,
+  "observed_at": "2026-09-21T06:00:00+00:00",
+  "scope_ref": "fixture:shared-host-and-targets",
+  "evidence_ref": "fixture:inventory-readback",
+  "executions": [
+    {
+      "execution": {
+        "id": "run-peer",
+        "ownership": "confirmed"
+      },
+      "resources": [
+        {
+          "kind": "code",
+          "key": "/tmp/task-18",
+          "host": "sandbox",
+          "access": "write"
+        }
+      ]
+    }
+  ]
+}

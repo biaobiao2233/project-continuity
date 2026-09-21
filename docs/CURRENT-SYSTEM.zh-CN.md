@@ -1,6 +1,6 @@
 # 当前实用系统：从 Project Spine 到 EverOS
 
-这份仓库不是只用于展示概念的文档集合。`project-workbench/` 与 Project Continuity v1.1 文档共同构成当前实际 dogfood 的项目持续记忆系统公开版。
+这份仓库不是只用于展示概念的文档集合。Project Continuity v1.1 仍是稳定协议基线；`project-workbench/` 当前公开 `2.0.0-rc.1` 完整候选，包含 team workflow、只读 checker、测试、eval 和配套提示词。RC 的本地验证不等于目标平台已经安装或验收。
 
 公开仓库的目标是：**公开方法、协议、模板、Skill 与集成边界；不公开用户真实项目数据。**
 
@@ -17,13 +17,14 @@
        └─ Source Pointers
 
 Project Workbench Skill
-  ├─ continuation / handoff routing
-  ├─ Session Pin / ownership safety
-  ├─ proportional governance
-  ├─ GitHub-first Issue / PR governance + local fallback
-  ├─ local-machine connector routing
-  ├─ direct server WebCodex routing
-  └─ EverOS-Tunnel historical recovery routing
+  ├─ direction → short task → replaceable executor model
+  ├─ continuation / ownership / explicit handoff safety
+  ├─ GitHub-first Issue / PR / dependency record
+  ├─ interface-contract-first parallel work + early integration
+  ├─ source/runtime/live-target resource isolation
+  ├─ candidate-bound review / release evidence
+  ├─ optional read-only resume/preflight/deliver/integrate checker
+  └─ direct connector + EverOS historical recovery routing
 
 EverOS
   └─ derived semantic memory / cross-agent historical index
@@ -68,7 +69,7 @@ repo / files / tests / live state
 
 ## Public parity contract
 
-`project-workbench/` 的默认目标是与当前 accepted user-level Project Workbench package 保持 **public-safe parity**，而不是长期维护一个“公开精简版”。Workflow、authority、tool-routing、review/handoff 语义保持一致；机器专属路径、设备别名或私人配置允许在公开版中脱敏。
+`project-workbench/` 的默认目标仍是保持 **public-safe parity**，但 parity 必须标明生命周期状态：当前公开目录对应 `2.0.0-rc.1` 本地已验证候选，而不是声称所有平台已经安装或接受。Workflow、authority、tool-routing、review/handoff 语义保持一致；机器专属路径、设备别名或私人配置继续脱敏。
 
 当前 invocation policy 是 **adapter-specific**，不是 canonical core 的单一布尔开关：
 
@@ -114,7 +115,7 @@ EverOS 则可以作为共享的 derived historical layer，让 Project B 的 Age
 - 不依赖后台 daemon 抢占项目 ownership；
 - Control Center 目前还不是 Project Continuity 的写入数据库。
 
-当前 v1.x 仍然依赖 Skill/Agent 主动进入项目连续性流程；ChatGPT 的 narrow implicit discovery 只是降低手动触发成本，Codex/Claude 仍可保持显式调用。这不是最终形态。
+当前 v2 RC 仍然依赖 Skill/Agent 进入项目连续性流程；ChatGPT 的 narrow implicit discovery 只是降低手动触发成本，Codex/Claude 仍可保持显式调用。新增只读 checker 也不是后台调度器。这仍不是最终形态。
 
 已明确列入 v3 的长期目标是 automatic project context feed：由 host/runtime/adapter 在 Agent 开始工作之前自动 materialize 当前项目的最小连续上下文，从而降低对 Agent 工具调用积极性和提示词遵循质量的依赖。Codex 是优先目标，其他 coding Agent 和技术上可接入的 Web AI 客户端随后复用同一 Context Packet contract。
 
