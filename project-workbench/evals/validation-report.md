@@ -1,13 +1,13 @@
 # Project Workbench v2 — 候选交付与验证报告
 
-版本：`2.0.0-rc.2`
+版本：`2.0.0-rc.3`
 日期：2026-09-21
-范围：完整 Skill 更新、配套中文个性化提示词、本地只读检查器与隔离测试。
+范围：完整 Skill 更新、配套中文个性化提示词、本地只读检查器、跨 Agent 安装/迁移流程与隔离测试。
 状态：**本地验证完成的候选包；未覆盖现用安装，不是独立验收或生产发布结论。**
 
 ## 交付内容
 
-`skill.zip` 是完整更新包，内部仅有一个 `SKILL.md` 入口。包含原有连接器/历史记忆参考路径与图标、新的协作和交付说明、只读检查脚本、测试、场景验收清单，以及两份配套提示词。
+`skill.zip` 是完整更新包，内部仅有一个 `SKILL.md` 入口。包含原有连接器/历史记忆参考路径与图标、协作和交付说明、只读检查脚本、跨 Agent 安装脚本、共享 global-guidance 源、测试、场景验收清单，以及两份配套提示词。
 
 完整中文提示词：`personalization-v2.txt`，3015 个字符（含换行）。短版：`personalization-v2-compact.txt`，1480 个字符（含换行）。两版为替代关系，不应叠加粘贴。实际平台限制与是否保存成功需要在目标设置中确认。
 
@@ -19,13 +19,15 @@ README 使用稳定入口或带时间/来源的派生视图，避免和 worklog 
 
 ## 实际执行的验证
 
-Python 标准库测试共 **47 项，全部通过，0 项跳过**：41 项检查器/输入测试、1 项临时 Git 集成试验、5 项包结构/引用/提示词一致性测试。命令为：
+Python 标准库测试共 **50 项，全部通过，0 项跳过**：41 项检查器/输入测试、1 项临时 Git 集成试验、5 项包结构/引用/提示词一致性测试、3 项跨 Agent installer 安全/幂等测试。命令为：
 
 ```sh
 PYTHONDONTWRITEBYTECODE=1 python -m unittest discover -s tests -v
 ```
 
 Git 试验在临时目录初始化全新测试仓库，使用固定接口契约和两个隔离工作区分别修改提供方与使用方，再合入测试主线并检查组合行为与干净工作区。试验未访问真实 GitHub、用户仓库或路由器。它证明这个本地测试流程可运行，**不证明两个真实 AI Agent 的行为已经验收**。
+
+Installer 另在隔离 Windows HOME 中实际执行：五个平台全局提示词 5/5 生成；共享 Skill 安装成功；两个 Antigravity native junction 均解析到同一 `~/.agents/skills/project-workbench`；OpenCode 未生成 `.config/opencode/skills` 重复副本；第二次执行返回 `LINK_ALREADY_OK` 并成功完成。随后从隔离安装后的 Skill 路径重新运行既有 47 项测试，全部通过。
 
 四个 CLI 示例实测：
 
@@ -50,7 +52,7 @@ OpenCode 1.18.3 额外做了平台级结构验证：`opencode debug paths` 确�
 
 ## 尚未发生的动作
 
-未完成 fresh AI receiver 的模型行为验收；OpenCode 只完成 catalog/config 结构验证，模型级 `opencode run` 探针超时。未运行真实 GitHub-hosted CI/merge queue；未修改 ChatGPT 个性化设置；未更改 Athena 现网。
+未完成 fresh AI receiver 的模型行为验收；OpenCode 只完成 catalog/config 结构验证，模型级 `opencode run` 探针超时。rc.3 的 installer 只在隔离 HOME 真安装，没有把 rc.3 覆盖到用户当前全局安装。未运行真实 GitHub-hosted CI/merge queue；未修改 ChatGPT 个性化设置；未更改 Athena 现网。
 
 ChatGPT 适配元数据保留现用的隐式调用策略；Codex 显式调用适配样例单独提供。不得把复制文件或打包成功当成平台已发现、加载或已应用设置。
 
