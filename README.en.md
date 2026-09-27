@@ -10,9 +10,9 @@ It is not a chat archive or a vector database. It focuses on three questions:
 
 > **What should be remembered now? What should be trusted? How should the next agent continue?**
 
-Current public baseline: **Project Continuity v1.1 stable protocol + Project Workbench `2.0.0-rc.3` pre-release candidate**. The RC passes 50 local tests and adds a repository-backed cross-agent Skill/global-guidance installation and migration flow for Codex, OpenCode, ZCode, Antigravity/Gemini and Claude Code; model-level fresh-receiver behavior remains a separate gate. See [v2.0.0-rc.3 release notes](docs/release-notes-v2.0.0-rc.3.md).
+Current public baseline: **Project Continuity v1.1 stable protocol + Project Workbench `2.0.0-rc.4` pre-release candidate**. rc.4 makes Fast Resume the default cold-start path, adds a lightweight GitHub Cloud Queue / CLAIM protocol, and makes branch/worktree isolation explicit. See [v2.0.0-rc.4 release notes](docs/release-notes-v2.0.0-rc.4.md).
 
-The checked-in `project-workbench/` now contains the complete `2.0.0-rc.3` candidate source, tests, examples, cross-agent installer, portable global-guidance sources, and paired personalization text. File installation or catalog discovery does not imply model-level receiver acceptance. Private Project Spines, worklogs, conversations, secrets, and machine-specific configuration remain excluded.
+Project Workbench now follows **one canonical Skill, many runtime adapters**. Agents share the same Skill at `~/.agents/skills/project-workbench`; ChatGPT, Codex, Cursor, and other host-specific behavior lives in global guidance rather than long-lived forked Workbench copies. Private Project Spines, conversations, secrets, and machine-specific configuration remain excluded.
 
 ## Core model
 
@@ -76,7 +76,7 @@ See [docs/PRIOR_ART.md](docs/PRIOR_ART.md) for the exact boundaries.
 ## Roadmap
 
 - **v1.x:** improve Markdown ergonomics, examples, and drift validation.
-- **v2 RC:** durable directions + short delivery tasks, contract-first parallel work, early integration, three-layer resource isolation, candidate-bound evidence, and a read-only `resume/preflight/deliver/integrate` snapshot checker.
+- **v2 RC:** Fast Resume, compact GitHub handoffs, GitHub-first durable tracking, lightweight Cloud Queue / CLAIM coordination, branch/worktree isolation, and one canonical cross-agent Project Workbench Skill.
 - **v3:** experimental runtime context injection / hooks, with a long-term goal of **automatic project context feed**: a host/runtime adapter materializes the current Project Spine / Active Work Node / Handoff / invariants before the model decides whether to call a Skill or read files. Codex is the first target, with reusable adapters for other agents and technically supported Web clients.
 - **v4:** optional local context proxy and request-time compression research.
 
@@ -90,9 +90,9 @@ The project deliberately avoids adding a database, daemon, heartbeat, proxy or a
 4. Close finished Work Nodes with Closure Memory.
 5. Use `project-workbench/` for a reusable on-demand workflow.
 
-Platform notes are under `integrations/`.
+Platform notes are under `integrations/`, including ChatGPT, Codex, Cursor, Claude Code, and generic-agent adapters.
 
-Invocation policy is adapter-specific while the workflow/authority core stays shared. The checked-in ChatGPT/OpenAI adapter uses **narrow implicit discovery** (`allow_implicit_invocation: true`) for ongoing/resumable project work and explicitly excludes one-off low-risk edits/reviews. Codex and Claude Code remain explicit by default unless their own adapters are deliberately changed.
+The workflow core is shared across agents. Runtime-specific invocation syntax, sandbox/approval behavior, native worktree commands, and connector routing belong in each host's global guidance rather than in a forked Project Workbench Skill.
 
 ## License
 
