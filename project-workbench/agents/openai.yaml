@@ -1,12 +1,5 @@
 interface:
   display_name: Project Workbench
-  short_description: Independent directions, continuous integration, verified handoffs
+  short_description: Fast GitHub-first resume, cloud task queues, worktrees, and project handoffs
   icon_small: assets/icon.svg
   icon_large: assets/icon.svg
-policy:
-  allow_implicit_invocation: true
-  products:
-  - chatgpt
-  - codex
-  - api
-  - atlas

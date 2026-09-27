@@ -10,9 +10,9 @@ Project Continuity 是一套面向 ChatGPT、Codex、Claude Code、Antigravity�
 
 > **现在要记什么？什么能信？下一个 Agent 怎么继续？**
 
-当前公开基线：**Project Continuity v1.1 稳定协议 + Project Workbench `2.0.0-rc.3` 预发布候选**。RC 已通过 50 项本地测试，并把 Codex / OpenCode / ZCode / Antigravity / Claude 的统一 Skill + 全局提示词安装迁移流程正式纳入仓库；fresh receiver 的模型行为仍是独立验收门。详见 [v2.0.0-rc.3 release notes](docs/release-notes-v2.0.0-rc.3.md)。
+当前公开基线：**Project Continuity v1.1 稳定协议 + Project Workbench `2.0.0-rc.4` 预发布候选**。rc.4 将真实使用中的核心恢复/协作路径收紧为 **Fast Resume → active Issue/PR → minimal live check → Next Action**，并加入 GitHub Cloud Queue / CLAIM 与 branch/worktree 隔离。详见 [v2.0.0-rc.4 release notes](docs/release-notes-v2.0.0-rc.4.md)。
 
-> 这不是一份只用于介绍想法的概念稿。仓库内 `project-workbench/` 现在公开的是 **2.0.0-rc.3 完整候选源码、测试、示例、跨 Agent 安装脚本、全局提示词源与配套提示词**；它来自本地已验证候选，但不把“文件已写入”或“catalog 可见”写成模型行为已经验收。真实项目的私有 Spine、worklogs、聊天和凭据不会被打包公开。详见 [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md)。
+> Project Workbench 现在采用 **one canonical Skill, many runtime adapters**：所有 Agent 共用 `~/.agents/skills/project-workbench`；ChatGPT / Codex / Cursor / Antigravity 等差异只放各自全局提示词、User Rules 或 AGENTS.md，不维护长期分叉的 Agent 专用 Workbench。
 
 ## 为什么需要它
 
@@ -140,14 +140,15 @@ Relevant Closure Memory 和 Next Action。
 - [Claude Code](integrations/claude-code.md)
 - [Antigravity / generic agents](integrations/generic-agent.md)
 
-当前 invocation policy 按平台 adapter 区分：
+当前推荐结构：
 
-- checked-in ChatGPT/OpenAI adapter：**narrow implicit discovery**，`allow_implicit_invocation: true`；只匹配持续/可恢复项目、handoff、continuity、live-state、GitHub governance 或多 Agent 协作；
-- Codex：默认 `$project-workbench` 显式调用；
-- Claude Code：默认 `/project-workbench` 显式调用；
-- ordinary chat、简单代码问题、一次性低风险修改和不需要连续性/治理的独立 review 不应被完整 Workbench ceremony 劫持。
+- canonical Skill：`~/.agents/skills/project-workbench`；
+- ChatGPT：`prompts/chatgpt-custom-instructions.zh-CN.md`；
+- Codex：`prompts/codex-agents.zh-CN.md`；
+- Cursor：`prompts/cursor-user-rules.zh-CN.md`；
+- 其它 Agent：复用同一 Skill，仅在全局规则中写运行时差异。
 
-平台中立全局规则模板见 `prompts/global-guidance.zh-CN.md`；当前 ChatGPT dogfood 的可直接粘贴用户级版本见 `prompts/chatgpt-custom-instructions.zh-CN.md`。
+平台中立模板见 `prompts/global-guidance.zh-CN.md`。
 
 ## 与 EverOS 联动
 
