@@ -76,7 +76,7 @@ See [docs/PRIOR_ART.md](docs/PRIOR_ART.md) for the exact boundaries.
 ## Roadmap
 
 - **v1.x:** improve Markdown ergonomics, examples, and drift validation.
-- **v2 RC:** durable directions + short delivery tasks, contract-first parallel work, early integration, three-layer resource isolation, candidate-bound evidence, and a read-only `resume/preflight/deliver/integrate` snapshot checker.
+- **v2 RC:** Fast Resume, compact GitHub handoffs, GitHub-first durable tracking, lightweight Cloud Queue / CLAIM coordination, branch/worktree isolation, and one canonical cross-agent Project Workbench Skill.
 - **v3:** experimental runtime context injection / hooks, with a long-term goal of **automatic project context feed**: a host/runtime adapter materializes the current Project Spine / Active Work Node / Handoff / invariants before the model decides whether to call a Skill or read files. Codex is the first target, with reusable adapters for other agents and technically supported Web clients.
 - **v4:** optional local context proxy and request-time compression research.
 
@@ -90,7 +90,7 @@ The project deliberately avoids adding a database, daemon, heartbeat, proxy or a
 4. Close finished Work Nodes with Closure Memory.
 5. Use `project-workbench/` for a reusable on-demand workflow.
 
-Platform notes are under `integrations/`.
+Platform notes are under `integrations/`, including ChatGPT, Codex, Cursor, Claude Code, and generic-agent adapters.
 
 The workflow core is shared across agents. Runtime-specific invocation syntax, sandbox/approval behavior, native worktree commands, and connector routing belong in each host's global guidance rather than in a forked Project Workbench Skill.
 
