@@ -137,6 +137,7 @@ Relevant Closure Memory 和 Next Action。
 
 - [ChatGPT](integrations/chatgpt.md)
 - [Codex](integrations/codex.md)
+- [Cursor](integrations/cursor.md)
 - [Claude Code](integrations/claude-code.md)
 - [Antigravity / generic agents](integrations/generic-agent.md)
 
@@ -238,19 +239,18 @@ Project Continuity 不是这些项目的 fork，也没有复制它们的源代�
 - 公共示例与多平台安装说明；
 - schema / drift lint，不改变 authority model。
 
-### v2 — Team workflow + read-only checker（当前 RC）
+### v2 — Fast Resume + GitHub-first multi-agent workflow（当前 RC）
 
-`2.0.0-rc.1` 已把真实使用中反复出现的摩擦收进候选：
+`2.0.0-rc.4` 聚焦实际使用中最影响接手速度和多 Agent 协作的路径：
 
-- 长期方向（Lane）与短期可交付任务分开；conversation/Agent 是可替换执行者；
-- GitHub Issue / PR / native dependency 作为工程账本，本地只保留 GitHub 不擅长的执行绑定；
-- 先约定 versioned interface contract，再并行实现并尽早集成；
-- 分别检查 source workspace、runtime resource、live target，worktree 不被误当成生产资源锁；
-- review / integration / deployment evidence 绑定准确 candidate 和 environment；
-- `resume / preflight / deliver / integrate` 只读 checker 只检查输入快照，不联网、不自动合并、不部署、不授予权限；
-- record sync 失败时显式保留 `RECORD_SYNC_PENDING`，不为了补账重复部署。
+- fresh coordinator 默认 **Fast Resume**：Handoff → active Issue/PR → minimal live check → Next Action；
+- Handoff 只保留 Objective / Gate / Active Item / Blocker / Invariants / Next Action，不复制项目历史；
+- GitHub 负责 durable Issues / PRs / commits / reviews / CI，避免第二套长期账本；
+- Cloud Queue + CLAIM 让多个 Agent 从 canonical tracker 自主领取 bounded task；
+- 一个 writable task 对应一个独立 branch/worktree，并保持 reviewer/verifier candidate-read-only；
+- 所有 Agent 共用 `~/.agents/skills/project-workbench` 这一份 canonical Skill；Cursor / Codex / ChatGPT 等运行时差异只放各自全局规则。
 
-当前 RC 的真实边界：47 项本地测试通过；尚未把 fresh receiver、真实 GitHub hosted workflow 或生产设备当作“已验收”。后续是否升 stable 由实际 receiver dogfood 决定。
+旧 rc.3 的 read-only checker / installer 仍保留为兼容资产，但不是 rc.4 核心工作流的前提。rc.4 尚未在所有 host 上完成 fresh-receiver 验收，因此不复用旧版本本地测试数字来声明本版本已通过。
 
 ### v3 — Runtime Context Injection / Hooks（实验）
 
