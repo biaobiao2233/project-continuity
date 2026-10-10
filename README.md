@@ -6,7 +6,7 @@
 
 ## 宣传片
 
-[![宣传片](docs/media/project-continuity-promo-poster.jpg)](docs/media/project-continuity-promo.mp4)
+https://github.com/user-attachments/assets/54908178-471f-4d3c-b088-d882a535c2e8
 
 60 秒演示：主控拆任务、各 Agent 按难度认领、额度用尽时由其他 Agent 读同一份 Handoff 接手、EverOS 回源核验、评审合并归档。
 
