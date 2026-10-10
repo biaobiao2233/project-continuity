@@ -6,7 +6,7 @@
 
 ## Promo
 
-[![Promo](docs/media/project-continuity-promo-poster.jpg)](docs/media/project-continuity-promo.mp4)
+https://github.com/user-attachments/assets/33304125-2ee3-4a0c-be0d-aebf209cf959
 
 A 60-second demo: the controller splits the task, agents claim work by difficulty, another agent reads the same Handoff and takes over when quota runs out, EverOS verifies against the source, then review, merge, and archive.
 
