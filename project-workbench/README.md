@@ -21,3 +21,5 @@ Active references: `fast-resume.md`, `project-continuity.md`, `github.md`, `clou
 Older rc.3 checker/install assets remain for historical compatibility but are no longer required to understand the core workflow.
 
 File presence, Skill discovery, and correct receiver behavior remain separate gates. The rc.3 50-test result does not automatically certify the changed rc.4 Skill.
+
+Queue rules added in this tree without a version bump: `D1`/`D2`/`D3` effort tags (separate from L0-L3 risk), advisory capability self-selection, and replaceable coordinator/worker takeover. The earliest valid CLAIM wins. `Coordinator hosts` is per-project configuration. These rules are not a fresh-receiver acceptance claim.

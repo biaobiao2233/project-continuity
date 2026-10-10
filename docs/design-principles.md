@@ -19,6 +19,8 @@ Governance should match risk:
 - L2: continuous projects with handoff needs
 - L3: production, security, migration, architecture, or multi-agent work
 
+L0-L3 measure governance risk. Claimable queue tasks may also carry an effort tag, `D1` / `D2` / `D3`. The effort tag does not change the risk level.
+
 Do not introduce heavyweight ceremony for low-risk work.
 
 ### 3. Current evidence over assumptions

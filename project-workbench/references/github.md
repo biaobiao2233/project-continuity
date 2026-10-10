@@ -19,6 +19,6 @@ A PR is a candidate/review surface, not proof of acceptance or production releas
 - Accepted durable architecture/knowledge → repo docs/ADR through a PR.
 
 ## Cloud queue
-When agents can execute independent tasks, use `cloud-queue.md` instead of asking the user to relay prompts/results manually.
+When agents can execute independent tasks, use `cloud-queue.md` instead of asking the user to relay prompts/results manually. Tag claimable tasks `difficulty:D1`, `difficulty:D2`, or `difficulty:D3`. L0-L3 remains the risk scale.
 
 Do not force Issue/PR ceremony for trivial low-risk edits.

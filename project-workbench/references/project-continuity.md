@@ -21,7 +21,8 @@ Never promote a lower-authority statement into accepted fact without verificatio
 - Fresh/cold conversation gets a fresh claimant identity unless continuity is independently established.
 - Old prompts, copied Session Keys, or seeing a registry row do not prove claimant identity.
 - Ambiguous/duplicate claimants enter `OWNERSHIP_UNCERTAIN`: reads allowed, shared/candidate writes blocked.
-- Full takeover requires explicit release/transfer or a canonical handoff that permits fresh coordinator takeover, plus receiver re-read.
+- Full takeover of a Cloud Queue claim follows `cloud-queue.md`: explicit release, current-user reassignment, or the project's staleness rule shown from GitHub evidence, plus a new CLAIM and a re-read. The Handoff transfers project knowledge; it does not by itself release the previous claim.
+- If release, reassignment, or staleness cannot be shown, enter `OWNERSHIP_UNCERTAIN`. Coordinator eligibility is the project's `Coordinator hosts` setting, not a vendor list.
 
 ## Write isolation
 - Declare the smallest writable scope.

@@ -8,7 +8,7 @@ Keep one byte-authoritative Project Workbench installation:
 All agents should discover or link to this same directory. Do not maintain independently edited Codex/Cursor/Antigravity/OpenCode/Claude copies.
 
 ## Responsibility split
-- **Skill**: Fast Resume, Deep Recovery, GitHub-first, Cloud Queue/CLAIM, worktree isolation principles, review/acceptance, handoff.
+- **Skill**: Fast Resume, Deep Recovery, GitHub-first, Cloud Queue/CLAIM (difficulty, capability self-selection, replaceable coordinator and workers), worktree isolation principles, review/acceptance, handoff.
 - **Host global guidance**: runtime commands, sandbox/approval, native worktree commands, connector/tool routing.
 - **Repo-local instructions**: project-specific invariants, build/test conventions, local constraints.
 
