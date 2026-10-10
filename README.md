@@ -4,6 +4,14 @@
 
 [English](README.en.md) · [当前实用系统](docs/CURRENT-SYSTEM.zh-CN.md) · [Agent 安装/迁移](docs/AGENT-SETUP.zh-CN.md) · [规范](docs/SPECIFICATION.zh-CN.md) · [模板](docs/TEMPLATES.md) · [多会话协调](docs/COORDINATION.zh-CN.md) · [EverOS / 多项目联动](docs/EVEROS-INTEGRATION.md) · [路线图](ROADMAP.md)
 
+## 宣传片
+
+[![宣传片](docs/media/project-continuity-promo-poster.jpg)](docs/media/project-continuity-promo.mp4)
+
+60 秒演示：主控拆任务、各 Agent 按难度认领、额度用尽时由其他 Agent 读同一份 Handoff 接手、EverOS 回源核验、评审合并归档。
+
+角色图为网友 AI 生成，作者不详，如有侵权请联系删除。
+
 Project Continuity 是一套面向 ChatGPT、Codex、Claude Code、Antigravity、OpenCode 等 Agent 的**跨会话 / 跨 Agent 项目连续记忆协议**。
 
 它不是聊天记录归档器，也不是向量数据库。它只解决三个问题：
