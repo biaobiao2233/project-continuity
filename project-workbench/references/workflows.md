@@ -11,7 +11,7 @@ When Objective, scope, authorization, and Next Action are clear:
 `inspect → edit → test → repair → retest → package/PR/update → verify`
 
 ## Publish multi-agent work
-Split only independent scopes; create bounded canonical Issues; avoid overlapping writes; agents claim via `cloud-queue.md`; Coordinator reads GitHub results and advances the gate.
+Split only independent scopes; create bounded canonical Issues with a `D1`/`D2`/`D3` Difficulty tag; avoid overlapping writes; agents claim via `cloud-queue.md` when the task fits their remaining capability. The earliest valid CLAIM wins. Coordinator reads GitHub results and advances the gate. When leaving a task or the coordinator role, and you can still write, post `RESULT` / `BLOCKED` with a resume point and `Claim: RELEASED`.
 
 ## Substantial Git implementation
 Issue → inspect branch/worktree → dedicated branch/worktree → smallest coherent change → focused checks → repair/retest → regression/scope checks → final diff/status → PR/tracker update → required review/verification.

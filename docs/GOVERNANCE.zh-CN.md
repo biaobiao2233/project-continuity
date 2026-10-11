@@ -106,7 +106,7 @@ Accepted/Merged Source
 除非真实使用证明需要，不默认增加：
 
 - Project Board / Kanban；
-- 大量 labels / priority matrix；
+- 大量 labels / priority matrix；Cloud Queue 只额外使用 `difficulty:D1`、`difficulty:D2`、`difficulty:D3` 三个工作量 label，它们不是优先级矩阵，也不代替 L0–L3；
 - Bot / webhook；
 - 自动 Issue/PR 双向同步；
 - CODEOWNERS automation；

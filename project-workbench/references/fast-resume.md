@@ -39,6 +39,8 @@ Then keep compact sections: Current Objective, Accepted / Verified State, Active
 
 The handoff is an index into canonical evidence, not a second ledger.
 
+When the project uses Cloud Queue, the handoff may also record `Coordinator hosts` (a project allowlist or a capability class; do not bake vendor names into the Skill) and `Claim staleness` (a window, or `explicit release only`). Per-task difficulty stays on the Issue. Unset `Claim staleness` uses the default in `cloud-queue.md`. Unset `Coordinator hosts` does not lock the role, and it does not let a worker inherit it without a new coordinator CLAIM.
+
 ## Deep Recovery
 Escalate only when the handoff is absent/ambiguous/conflicting/stale, ownership or authorization is uncertain, high-impact risk requires wider verification, or the user asks for comprehensive reconstruction.
 

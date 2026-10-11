@@ -220,3 +220,52 @@ Completion Packet 是 Worker Claim，不自动等于 PASS。
 - Schema changes needed:
 ```
 
+## H. Cloud Queue task / CLAIM
+
+Difficulty 是工作量，不是 L0–L3 风险。Coordinator 发可领取任务时同时写正文栏位和 GitHub label（`difficulty:D1`、`difficulty:D2` 或 `difficulty:D3`）。
+
+```markdown
+## Task
+- Objective:
+- Owned scope:
+- Out of scope:
+- Difficulty: D1 | D2 | D3
+- Acceptance criteria / required checks:
+- Protected invariants:
+- Allowed writes:
+- Resume point:
+```
+
+```text
+CLAIM
+Role: Implementer
+Session: <fresh unique logical key>
+Scope: Issue #42
+Difficulty-fit: D2
+Capability note: remaining context and repo write tools cover this scope
+Takeover: none | released claim by <session> | stale claim by <rule> | owner reassignment
+```
+
+`Role`、`Session`、`Scope` 必填。`Difficulty-fit` 和 `Capability note` 可选，只写能力与剩余预算，不给厂商或模型排名。
+
+离开任务且还能写时：
+
+```markdown
+## RESULT
+Status: BLOCKED
+Claim: RELEASED
+### Resume point
+- Last completed action:
+- Safe next action:
+- Do NOT repeat:
+```
+
+所有权无法从 Issue/PR 证明时，不写 shared/candidate，改为：
+
+```text
+OWNERSHIP_UNCERTAIN
+Scope: Issue #42
+Reason: prior CLAIM is neither released nor shown stale under <rule>
+Next: human confirms release, or names the next claimant
+```
+

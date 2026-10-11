@@ -46,6 +46,8 @@ The acceptance test is intentionally simple:
 - **Authority / observation / acceptance separation** — permission comes from current authorization and scope; current state comes from live/repository evidence; acceptance stays bound to the exact candidate and environment that were actually reviewed.
 - **In-flight resume state** — Current Resume Point records the physical boundary of unfinished work.
 - **Fail-closed multi-session coordination** — ambiguous ownership becomes `OWNERSHIP_UNCERTAIN`; shared/candidate writes become read-only.
+- **Replaceable coordinators and workers** — resume from the same Handoff and active Issue/PR, without replaying chat. A claim changes hands only by explicit release, current-user reassignment, or the project's staleness rule.
+- **Effort tags, not a vendor ladder** — claimable tasks use `D1` / `D2` / `D3`, separate from L0–L3 risk. Capability self-selection is advisory; the earliest valid CLAIM wins. Who may coordinate is per-project configuration.
 - **Proportional governance** — formal review gates are used when the task or node contract needs them, not for every tiny edit.
 
 ## EverOS integration
@@ -84,7 +86,7 @@ See [docs/PRIOR_ART.md](docs/PRIOR_ART.md) for the exact boundaries.
 ## Roadmap
 
 - **v1.x:** improve Markdown ergonomics, examples, and drift validation.
-- **v2 RC:** Fast Resume, compact GitHub handoffs, GitHub-first durable tracking, lightweight Cloud Queue / CLAIM coordination, branch/worktree isolation, and one canonical cross-agent Project Workbench Skill.
+- **v2 RC:** Fast Resume, compact GitHub handoffs, GitHub-first durable tracking, lightweight Cloud Queue / CLAIM coordination, branch/worktree isolation, and one canonical cross-agent Project Workbench Skill. The current Skill adds, without a version bump: `D1`/`D2`/`D3` effort tags, advisory capability self-selection, and replaceable coordinator and workers. Published rc.4 release notes do not list those queue rules, and they are not a fresh-receiver acceptance claim.
 - **v3:** experimental runtime context injection / hooks, with a long-term goal of **automatic project context feed**: a host/runtime adapter materializes the current Project Spine / Active Work Node / Handoff / invariants before the model decides whether to call a Skill or read files. Codex is the first target, with reusable adapters for other agents and technically supported Web clients.
 - **v4:** optional local context proxy and request-time compression research.
 

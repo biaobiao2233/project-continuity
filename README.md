@@ -260,6 +260,12 @@ Project Continuity 不是这些项目的 fork，也没有复制它们的源代�
 
 旧 rc.3 的 read-only checker / installer 仍保留为兼容资产，但不是 rc.4 核心工作流的前提。rc.4 尚未在所有 host 上完成 fresh-receiver 验收，因此不复用旧版本本地测试数字来声明本版本已通过。
 
+当前 Skill 在不升 `VERSION` 的前提下补充了队列规则（未写入已发布的 rc.4 release notes）：
+
+- 可领取任务另标工作量 `D1` / `D2` / `D3`（GitHub label + 正文栏位），与 L0-L3 风险层级分开；
+- Worker 按剩余上下文、额度、工具和沙箱自选或放弃任务；这只是建议，不给厂商或模型排名，最早的有效 CLAIM 仍然有效；
+- Coordinator 和 Worker 都可替换：读同一份 Handoff 和 active Issue/PR 即可接手，不重放聊天。离开时能写就留下 `RESULT: BLOCKED` 和 resume point；接手者对已释放、主人改派或按规则过期的 claim 发新 CLAIM。所有权无法证明时 `OWNERSHIP_UNCERTAIN`，只读并询问人。谁可以当 Coordinator 由项目的 `Coordinator hosts` 配置。
+
 ### v3 — Runtime Context Injection / Hooks（实验）
 
 - 长期目标是不再依赖 Agent 主动调用 Skill / 主动读取 Project Spine；

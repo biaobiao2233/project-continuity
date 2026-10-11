@@ -1,6 +1,6 @@
 # 当前实用系统：从 Project Spine 到 EverOS
 
-这份仓库不是只用于展示概念的文档集合。Project Continuity v1.1 仍是稳定协议基线；`project-workbench/` 当前公开 `2.0.0-rc.1` 完整候选，包含 team workflow、只读 checker、测试、eval 和配套提示词。RC 的本地验证不等于目标平台已经安装或验收。
+这份仓库不是只用于展示概念的文档集合。Project Continuity v1.1 仍是稳定协议基线；`project-workbench/` 当前公开版本是 `2.0.0-rc.4` 预发布候选（以 `project-workbench/VERSION` 为准）。rc.4 的核心是 Fast Resume、轻量 Cloud Queue / CLAIM 和 branch/worktree 隔离；仓库里仍保留更早的 team workflow、只读 checker、测试、eval 和配套提示词。文件在仓库中、本地测试通过、或旧 rc 的验证数字，都不等于目标平台已经安装或验收本版本。
 
 公开仓库的目标是：**公开方法、协议、模板、Skill 与集成边界；不公开用户真实项目数据。**
 
@@ -17,7 +17,8 @@
        └─ Source Pointers
 
 Project Workbench Skill
-  ├─ direction → short task → replaceable executor model
+  ├─ direction → short task → replaceable coordinator and workers
+  ├─ Cloud Queue difficulty D1-D3（effort；L0-L3 仍是 risk）
   ├─ continuation / ownership / explicit handoff safety
   ├─ GitHub-first Issue / PR / dependency record
   ├─ interface-contract-first parallel work + early integration
@@ -69,7 +70,7 @@ repo / files / tests / live state
 
 ## Public parity contract
 
-`project-workbench/` 的默认目标仍是保持 **public-safe parity**，但 parity 必须标明生命周期状态：当前公开目录对应 `2.0.0-rc.1` 本地已验证候选，而不是声称所有平台已经安装或接受。Workflow、authority、tool-routing、review/handoff 语义保持一致；机器专属路径、设备别名或私人配置继续脱敏。
+`project-workbench/` 的默认目标仍是保持 **public-safe parity**，但 parity 必须标明生命周期状态：当前公开目录对应 `2.0.0-rc.4` 预发布候选，而不是声称所有平台已经安装或接受。Workflow、authority、tool-routing、review/handoff 语义保持一致；机器专属路径、设备别名或私人配置继续脱敏。
 
 当前 invocation policy 是 **adapter-specific**，不是 canonical core 的单一布尔开关：
 

@@ -8,7 +8,7 @@
 
 所有 Agent 使用完全相同的 Skill 内容；运行时差异只放各自全局规则。
 
-Skill 负责 Fast Resume / Deep Recovery、GitHub-first、Handoff、Cloud Queue / CLAIM、branch/worktree isolation 原则、角色、review/acceptance、continuous execution、high-signal continuity。
+Skill 负责 Fast Resume / Deep Recovery、GitHub-first、Handoff、Cloud Queue / CLAIM（`D1`/`D2`/`D3` 工作量、按能力自选、可替换的 Coordinator 与 Worker）、branch/worktree isolation 原则、角色、review/acceptance、continuous execution、high-signal continuity。
 
 全局规则负责 sandbox/approval、native worktree 命令、connector/tool routing、Skill 调用语法、UI/运行时行为。
 

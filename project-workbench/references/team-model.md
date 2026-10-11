@@ -28,7 +28,7 @@ Do not let an integrator silently implement substantial product changes to resol
 
 Before opening another task, look for a blocked consumer that can be unblocked, a PR awaiting review, or a ready integration. Set the concurrency limit from actual available executors, memory, test resources and deployment targets. Do not assume more agents means more throughput.
 
-A coordinator that becomes unavailable does not grant its privileges to every worker. Workers may finish already-owned isolated tasks and report results; central writes and deployment ownership still require a valid grant.
+A coordinator that becomes unavailable does not grant its privileges to every worker. Workers may finish already-owned isolated tasks and report results. Another agent becomes coordinator only by the takeover rules in `cloud-queue.md`: re-read the Handoff and active Issue/PR, then post a new coordinator CLAIM after the prior claim is released, owner-reassigned, or stale. Honor `Coordinator hosts` when the project sets it. Central writes and deployment ownership still require a valid grant. If that grant or the prior claim cannot be shown, stop at `OWNERSHIP_UNCERTAIN`.
 
 ## Athena-style example (illustrative, not live state)
 

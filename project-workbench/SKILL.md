@@ -61,6 +61,8 @@ Discover the capabilities actually available in the current agent/session. Never
 - **L2** resumable/multi-file/substantial Git work → minimum continuity, normally a canonical Issue plus branch; use a worktree when isolation helps.
 - **L3** multi-agent/production/security/migration/architecture → explicit ownership, isolated workspaces, canonical tracker, required checks, independent review/verification where appropriate.
 
+L0-L3 measure governance risk. Claimable queue tasks may also carry effort tags `D1`/`D2`/`D3`.
+
 Do not create process merely to demonstrate process.
 
 ## 6. GitHub-first lifecycle
@@ -78,7 +80,10 @@ Research:
 ## 7. Multi-agent cloud queue
 When several agents can execute independent bounded tasks, publish them to the canonical tracker and let agents claim them rather than making the user relay prompts/results manually.
 
-Roles may include `Coordinator`, `Scout`, `Implementer`, `Reviewer`, and `Verifier`.
+Roles may include `Coordinator`, `Scout`, `Implementer`, `Reviewer`, and `Verifier`. Coordinator and workers are replaceable: resume from the same Handoff and active Issue/PR, without replaying chat.
+
+The Coordinator sets `D1`/`D2`/`D3` (GitHub label plus task field) when posting. Workers self-select by remaining capability. That choice is advisory, uses capability terms, and does not rank vendors or models. The earliest valid CLAIM still wins. A prior claim yields only by explicit release, current-user reassignment, or the project's staleness rule. If ownership cannot be shown, stop at `OWNERSHIP_UNCERTAIN` and ask the human. Who may coordinate is the project's `Coordinator hosts` setting.
+
 Use [references/cloud-queue.md](references/cloud-queue.md).
 
 ## 8. Branch/worktree isolation
